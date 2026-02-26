@@ -10,6 +10,13 @@ export default function SettingsPage() {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
+  const [weights, setWeights] = useState({
+    skills: 40,
+    experience: 30,
+    education: 20,
+    certifications: 10,
+  });
+
   useEffect(() => setMounted(true), []);
 
   const themes = [
@@ -95,58 +102,33 @@ export default function SettingsPage() {
           Set default weights for how candidates are scored. Individual jobs can override these.
         </p>
         <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium mb-1">Skills Match</label>
-            <div className="flex items-center gap-2">
-              <input
-                type="range"
-                min={0}
-                max={100}
-                defaultValue={40}
-                className="flex-1"
-              />
-              <span className="text-sm font-medium w-10">40%</span>
+          {(
+            [
+              { key: "skills", label: "Skills Match" },
+              { key: "experience", label: "Experience" },
+              { key: "education", label: "Education" },
+              { key: "certifications", label: "Certifications" },
+            ] as const
+          ).map(({ key, label }) => (
+            <div key={key}>
+              <label className="block text-sm font-medium mb-1">{label}</label>
+              <div className="flex items-center gap-2">
+                <input
+                  type="range"
+                  min={0}
+                  max={100}
+                  value={weights[key]}
+                  onChange={(e) =>
+                    setWeights((prev) => ({ ...prev, [key]: Number(e.target.value) }))
+                  }
+                  className="flex-1"
+                />
+                <span className="text-sm font-medium w-10 text-right">
+                  {weights[key]}%
+                </span>
+              </div>
             </div>
-          </div>
-          <div>
-            <label className="block text-sm font-medium mb-1">Experience</label>
-            <div className="flex items-center gap-2">
-              <input
-                type="range"
-                min={0}
-                max={100}
-                defaultValue={30}
-                className="flex-1"
-              />
-              <span className="text-sm font-medium w-10">30%</span>
-            </div>
-          </div>
-          <div>
-            <label className="block text-sm font-medium mb-1">Education</label>
-            <div className="flex items-center gap-2">
-              <input
-                type="range"
-                min={0}
-                max={100}
-                defaultValue={20}
-                className="flex-1"
-              />
-              <span className="text-sm font-medium w-10">20%</span>
-            </div>
-          </div>
-          <div>
-            <label className="block text-sm font-medium mb-1">Certifications</label>
-            <div className="flex items-center gap-2">
-              <input
-                type="range"
-                min={0}
-                max={100}
-                defaultValue={10}
-                className="flex-1"
-              />
-              <span className="text-sm font-medium w-10">10%</span>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
 

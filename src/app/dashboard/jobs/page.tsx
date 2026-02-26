@@ -4,7 +4,7 @@ import { useQuery, useMutation } from "convex/react";
 import { api } from "../../../../convex/_generated/api";
 import { useUser } from "@clerk/nextjs";
 import { useState } from "react";
-import { Plus, Briefcase, Trash2, Eye } from "lucide-react";
+import { Plus, Briefcase, Trash2, Eye, ToggleLeft, ToggleRight } from "lucide-react";
 import Link from "next/link";
 import { ScoreBadge } from "@/components/score-badge";
 
@@ -14,6 +14,7 @@ export default function JobsPage() {
   const jobs = useQuery(api.jobs.list, orgId ? { organizationId: orgId } : "skip");
   const createJob = useMutation(api.jobs.create);
   const deleteJob = useMutation(api.jobs.remove);
+  const updateJob = useMutation(api.jobs.update);
 
   const [showForm, setShowForm] = useState(false);
   const [title, setTitle] = useState("");
@@ -224,6 +225,22 @@ export default function JobsPage() {
                     </p>
                     <p className="text-xs text-[var(--muted-foreground)]">screened</p>
                   </div>
+                  <button
+                    onClick={() =>
+                      updateJob({
+                        id: job._id,
+                        status: job.status === "active" ? "inactive" : "active",
+                      })
+                    }
+                    className="p-2 rounded-lg hover:bg-[var(--accent)] transition-colors"
+                    title={job.status === "active" ? "Set inactive" : "Set active"}
+                  >
+                    {job.status === "active" ? (
+                      <ToggleRight className="h-5 w-5 text-emerald-500" />
+                    ) : (
+                      <ToggleLeft className="h-5 w-5 text-[var(--muted-foreground)]" />
+                    )}
+                  </button>
                   <Link
                     href={`/dashboard/jobs/${job._id}`}
                     className="p-2 rounded-lg hover:bg-[var(--accent)] transition-colors"
