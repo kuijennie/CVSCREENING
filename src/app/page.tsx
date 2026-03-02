@@ -8,6 +8,7 @@ import {
   Shield,
 } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 export default function HomePage() {
   return (
@@ -23,18 +24,23 @@ export default function HomePage() {
           </div>
           <div className="flex items-center gap-4">
             <ThemeToggle />
-            <Link
-              href="/sign-in"
-              className="text-sm text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors"
-            >
-              Sign In
-            </Link>
-            <Link
-              href="/sign-up"
-              className="text-sm px-4 py-2 rounded-lg bg-[var(--primary)] text-[var(--primary-foreground)] hover:opacity-90 transition-opacity"
-            >
-              Get Started
-            </Link>
+            <SignedOut>
+              <Link
+                href="/sign-in"
+                className="text-sm text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors"
+              >
+                Sign In
+              </Link>
+              <Link
+                href="/sign-up"
+                className="text-sm px-4 py-2 rounded-lg bg-[var(--primary)] text-[var(--primary-foreground)] hover:opacity-90 transition-opacity"
+              >
+                Get Started
+              </Link>
+            </SignedOut>
+            <SignedIn>
+              <UserButton afterSignOutUrl="/" />
+            </SignedIn>
           </div>
         </div>
       </header>
