@@ -69,6 +69,7 @@ export const getByJob = query({
   },
 });
 
+
 export const getStats = query({
   args: { jobId: v.id("jobs") },
   handler: async (ctx, args) => {

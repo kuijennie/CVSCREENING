@@ -120,12 +120,18 @@ export default function UploadPage() {
             };
           });
 
+          // Helper to reject AI placeholder/null strings
+          const clean = (val: unknown) =>
+            typeof val === "string" && val && !val.startsWith("<") && val !== "null"
+              ? val
+              : undefined;
+
           // Save candidate
           const candidateId = await createCandidate({
-            name: parsed.name || file.name.replace(/\.(pdf|docx)$/i, ""),
-            email: parsed.email || undefined,
-            phone: parsed.phone || undefined,
-            summary: parsed.summary || undefined,
+            name: clean(parsed.name) || file.name.replace(/\.(pdf|docx)$/i, ""),
+            email: clean(parsed.email),
+            phone: clean(parsed.phone),
+            summary: clean(parsed.summary),
             education,
             experience: (parsed.experience || []).map((exp: { company: string; role: string; duration?: string; description?: string }) => ({
               company: exp.company,
@@ -133,8 +139,8 @@ export default function UploadPage() {
               duration: exp.duration || undefined,
               description: exp.description || undefined,
             })),
-            skills: parsed.skills || [],
-            certifications: parsed.certifications || [],
+            skills: (parsed.skills || []).filter((s: string) => s && !s.startsWith("<") && s !== "null"),
+            certifications: (parsed.certifications || []).filter((c: string) => c && !c.startsWith("<") && c !== "null"),
             rawText: text,
             fileId: storageId,
             fileName: file.name,
@@ -363,25 +369,21 @@ export default function UploadPage() {
 }
 
 async function readFileAsText(file: File): Promise<string> {
-  if (file.name.endsWith(".pdf")) {
-    const arrayBuffer = await file.arrayBuffer();
-    const buffer = Buffer.from(arrayBuffer);
-    // For PDF parsing, we send the raw text
-    // In production, this would use a server-side PDF parser
-    // For now, we'll try to extract text from the arraybuffer
-    try {
-      const text = new TextDecoder("utf-8", { fatal: false }).decode(buffer);
-      // Basic PDF text extraction - strip binary content
-      const textContent = text
-        .replace(/[^\x20-\x7E\n\r\t]/g, " ")
-        .replace(/\s+/g, " ")
-        .trim();
-      return textContent || `[PDF file: ${file.name}]`;
-    } catch {
-      return `[PDF file: ${file.name}]`;
+  const formData = new FormData();
+  formData.append("file", file);
+
+  try {
+    const response = await fetch("/api/parse-file", {
+      method: "POST",
+      body: formData,
+    });
+    if (response.ok) {
+      const { text } = await response.json();
+      if (text && text.trim().length > 20) return text;
     }
-  } else {
-    // DOCX - read as text
-    return await file.text();
+  } catch {
+    // fall through to filename fallback
   }
+
+  return `[File: ${file.name}]`;
 }
