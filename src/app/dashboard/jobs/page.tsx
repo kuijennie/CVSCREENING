@@ -4,7 +4,7 @@ import { useQuery, useMutation } from "convex/react";
 import { api } from "../../../../convex/_generated/api";
 import { useUser } from "@clerk/nextjs";
 import { useState } from "react";
-import { Plus, Briefcase, Trash2, Eye, ToggleLeft, ToggleRight } from "lucide-react";
+import { Plus, Briefcase, Trash, Eye, ToggleLeft, ToggleRight } from "@phosphor-icons/react";
 import Link from "next/link";
 import { ScoreBadge } from "@/components/score-badge";
 
@@ -197,8 +197,8 @@ export default function JobsPage() {
                     <span
                       className={`px-2 py-0.5 rounded-full text-xs font-medium ${
                         job.status === "active"
-                          ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300"
-                          : "bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300"
+                          ? "bg-[var(--primary)]/10 text-[var(--primary)]"
+                          : "bg-[var(--secondary)] text-[var(--muted-foreground)]"
                       }`}
                     >
                       {job.status}
@@ -236,7 +236,7 @@ export default function JobsPage() {
                     title={job.status === "active" ? "Set inactive" : "Set active"}
                   >
                     {job.status === "active" ? (
-                      <ToggleRight className="h-5 w-5 text-emerald-500" />
+                      <ToggleRight className="h-5 w-5 text-[var(--primary)]" />
                     ) : (
                       <ToggleLeft className="h-5 w-5 text-[var(--muted-foreground)]" />
                     )}
@@ -257,7 +257,7 @@ export default function JobsPage() {
                     className="p-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-950 text-red-500 transition-colors"
                     title="Delete job"
                   >
-                    <Trash2 className="h-4 w-4" />
+                    <Trash className="h-4 w-4" />
                   </button>
                 </div>
               </div>

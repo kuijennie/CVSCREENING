@@ -10,14 +10,14 @@ import { KenyanInstitutionBadge } from "@/components/kenyan-institution-badge";
 import type { InstitutionTier } from "@/lib/kenyan-institutions";
 import {
   ArrowLeft,
-  Download,
+  DownloadSimple,
   Users,
-  BarChart3,
-  TrendingUp,
-  TrendingDown,
-  ChevronDown,
-  ChevronUp,
-} from "lucide-react";
+  ChartBar,
+  TrendUp,
+  TrendDown,
+  CaretDown,
+  CaretUp,
+} from "@phosphor-icons/react";
 import Link from "next/link";
 import { useState } from "react";
 import {
@@ -107,13 +107,13 @@ export default function JobDetailPage() {
   const SortIcon = ({ field }: { field: string }) =>
     sortBy === field ? (
       sortDir === "desc" ? (
-        <ChevronDown className="h-3 w-3" />
+        <CaretDown className="h-3 w-3" />
       ) : (
-        <ChevronUp className="h-3 w-3" />
+        <CaretUp className="h-3 w-3" />
       )
     ) : null;
 
-  const chartColors = ["#ef4444", "#f59e0b", "#eab308", "#84cc16", "#22c55e", "#10b981", "#14b8a6", "#06b6d4", "#3b82f6", "#8b5cf6"];
+  const chartColors = ["#ccfbf1", "#99f6e4", "#5eead4", "#2dd4bf", "#14b8a6", "#0D9488", "#0f766e", "#115e59", "#0d4f4a", "#083d3a"];
 
   return (
     <div>
@@ -135,7 +135,7 @@ export default function JobDetailPage() {
           onClick={exportCSV}
           className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-[var(--border)] hover:bg-[var(--accent)] text-sm font-medium"
         >
-          <Download className="h-4 w-4" />
+          <DownloadSimple className="h-4 w-4" />
           Export CSV
         </button>
       </div>
@@ -151,19 +151,19 @@ export default function JobDetailPage() {
           </div>
           <div className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-4">
             <div className="flex items-center gap-2 text-sm text-[var(--muted-foreground)] mb-1">
-              <BarChart3 className="h-4 w-4" /> Avg Score
+              <ChartBar className="h-4 w-4" /> Avg Score
             </div>
             <p className="text-2xl font-bold">{Math.round(stats.avgScore)}%</p>
           </div>
           <div className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-4">
             <div className="flex items-center gap-2 text-sm text-[var(--muted-foreground)] mb-1">
-              <TrendingUp className="h-4 w-4" /> Top Score
+              <TrendUp className="h-4 w-4" /> Top Score
             </div>
             <p className="text-2xl font-bold">{Math.round(stats.topScore)}%</p>
           </div>
           <div className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-4">
             <div className="flex items-center gap-2 text-sm text-[var(--muted-foreground)] mb-1">
-              <TrendingDown className="h-4 w-4" /> Low Score
+              <TrendDown className="h-4 w-4" /> Low Score
             </div>
             <p className="text-2xl font-bold">{Math.round(stats.lowScore)}%</p>
           </div>
@@ -218,7 +218,7 @@ export default function JobDetailPage() {
       {/* Rankings Table */}
       {!rankings || rankings.length === 0 ? (
         <div className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-12 text-center">
-          <BarChart3 className="h-16 w-16 mx-auto mb-4 text-[var(--muted-foreground)] opacity-30" />
+          <ChartBar className="h-16 w-16 mx-auto mb-4 text-[var(--muted-foreground)] opacity-30" />
           <h3 className="text-lg font-medium mb-2">No rankings yet</h3>
           <p className="text-[var(--muted-foreground)]">
             Upload CVs and run analysis to see candidate rankings.
@@ -322,7 +322,7 @@ export default function JobDetailPage() {
                               </p>
                             </div>
                             <div>
-                              <h4 className="text-sm font-semibold mb-2 text-emerald-600">
+                              <h4 className="text-sm font-semibold mb-2 text-[var(--primary)]">
                                 Strengths
                               </h4>
                               <ul className="text-sm space-y-1">
@@ -347,7 +347,7 @@ export default function JobDetailPage() {
                             </div>
                           </div>
                           {ranking.kenyanInstitutionBonus ? (
-                            <p className="text-xs text-emerald-600 mt-2">
+                            <p className="text-xs text-[var(--primary)] mt-2">
                               +{ranking.kenyanInstitutionBonus} Kenyan institution bonus
                             </p>
                           ) : null}

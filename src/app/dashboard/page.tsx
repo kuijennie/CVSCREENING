@@ -3,7 +3,7 @@
 import { useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import { useUser } from "@clerk/nextjs";
-import { Briefcase, Users, BarChart3, TrendingUp } from "lucide-react";
+import { Briefcase, Users, ChartBar, TrendUp } from "@phosphor-icons/react";
 
 export default function DashboardPage() {
   const { user } = useUser();
@@ -34,29 +34,29 @@ export default function DashboardPage() {
           title="Active Jobs"
           value={activeJobs}
           icon={<Briefcase className="h-5 w-5" />}
-          color="text-blue-600 dark:text-blue-400"
-          bg="bg-blue-50 dark:bg-blue-950"
+          color="text-[var(--primary)]"
+          bg="bg-[var(--primary)]/10"
         />
         <StatCard
           title="Total Candidates"
           value={totalCandidates}
           icon={<Users className="h-5 w-5" />}
-          color="text-emerald-600 dark:text-emerald-400"
-          bg="bg-emerald-50 dark:bg-emerald-950"
+          color="text-[var(--primary)]"
+          bg="bg-[var(--primary)]/10"
         />
         <StatCard
           title="CVs Analyzed"
           value={totalAnalyzed}
-          icon={<BarChart3 className="h-5 w-5" />}
-          color="text-purple-600 dark:text-purple-400"
-          bg="bg-purple-50 dark:bg-purple-950"
+          icon={<ChartBar className="h-5 w-5" />}
+          color="text-[var(--primary)]"
+          bg="bg-[var(--primary)]/10"
         />
         <StatCard
           title="Total Jobs"
           value={jobs?.length || 0}
-          icon={<TrendingUp className="h-5 w-5" />}
-          color="text-amber-600 dark:text-amber-400"
-          bg="bg-amber-50 dark:bg-amber-950"
+          icon={<TrendUp className="h-5 w-5" />}
+          color="text-[var(--primary)]"
+          bg="bg-[var(--primary)]/10"
         />
       </div>
 

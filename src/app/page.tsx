@@ -1,20 +1,22 @@
+"use client";
+
 import Link from "next/link";
 import {
-  Upload,
-  BarChart3,
+  UploadSimple,
+  ChartBar,
   Users,
   GraduationCap,
-  Zap,
-  Shield,
+  Lightning,
+  ShieldCheck,
   ArrowRight,
   CheckCircle,
-  BriefcaseBusiness,
-  ScanSearch,
+  Briefcase,
+  FileMagnifyingGlass,
   ListChecks,
   BookOpen,
   Wrench,
-  Award,
-} from "lucide-react";
+  Medal,
+} from "@phosphor-icons/react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import {
@@ -30,30 +32,30 @@ const TIER_CONFIG: Record<
   top: {
     label: "Top University",
     icon: <GraduationCap className="h-3 w-3" />,
-    color: "#059669",
-    bg: "rgba(5,150,105,0.08)",
-    border: "rgba(5,150,105,0.25)",
+    color: "#0D9488",
+    bg: "rgba(13,148,136,0.10)",
+    border: "rgba(13,148,136,0.30)",
   },
   mid: {
     label: "University",
     icon: <BookOpen className="h-3 w-3" />,
-    color: "#2563eb",
-    bg: "rgba(37,99,235,0.08)",
-    border: "rgba(37,99,235,0.25)",
+    color: "#0f766e",
+    bg: "rgba(15,118,110,0.10)",
+    border: "rgba(15,118,110,0.30)",
   },
   tvet: {
     label: "TVET",
     icon: <Wrench className="h-3 w-3" />,
-    color: "#d97706",
-    bg: "rgba(217,119,6,0.08)",
-    border: "rgba(217,119,6,0.25)",
+    color: "#0e7490",
+    bg: "rgba(14,116,144,0.10)",
+    border: "rgba(14,116,144,0.30)",
   },
   professional: {
     label: "Professional",
-    icon: <Award className="h-3 w-3" />,
-    color: "#7c3aed",
-    bg: "rgba(124,58,237,0.08)",
-    border: "rgba(124,58,237,0.25)",
+    icon: <Medal className="h-3 w-3" />,
+    color: "#0D9488",
+    bg: "rgba(13,148,136,0.08)",
+    border: "rgba(13,148,136,0.25)",
   },
   other: {
     label: "Institution",
@@ -247,7 +249,7 @@ export default function HomePage() {
       {/* Hero */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--border)] bg-[var(--secondary)] text-sm text-[var(--muted-foreground)] mb-6">
-          <Zap className="h-3 w-3 text-[var(--primary)]" />
+          <Lightning className="h-3 w-3 text-[var(--primary)]" />
           AI-Powered CV Screening
         </div>
         <h1 className="text-4xl sm:text-6xl font-bold tracking-tight mb-6">
@@ -359,12 +361,12 @@ export default function HomePage() {
         </h2>
         <div className="grid md:grid-cols-3 gap-8">
           <FeatureCard
-            icon={<Upload className="h-6 w-6" />}
+            icon={<UploadSimple className="h-6 w-6" />}
             title="Bulk Upload"
             description="Upload up to 1000 CVs at once. Supports PDF and DOCX formats with drag & drop."
           />
           <FeatureCard
-            icon={<BarChart3 className="h-6 w-6" />}
+            icon={<ChartBar className="h-6 w-6" />}
             title="AI Ranking"
             description="OpenAI-powered analysis scores candidates on skills, experience, education, and certifications."
           />
@@ -374,12 +376,12 @@ export default function HomePage() {
             description="Automatically recognizes 70+ Kenyan universities, TVETs, and professional bodies with tier badges."
           />
           <FeatureCard
-            icon={<Zap className="h-6 w-6" />}
+            icon={<Lightning className="h-6 w-6" />}
             title="Real-time Processing"
             description="Watch rankings update live as CVs are analyzed. Powered by Convex real-time database."
           />
           <FeatureCard
-            icon={<Shield className="h-6 w-6" />}
+            icon={<ShieldCheck className="h-6 w-6" />}
             title="Organization Accounts"
             description="Secure team access with Clerk authentication. Manage roles and permissions."
           />
@@ -417,7 +419,7 @@ export default function HomePage() {
             {[
               {
                 num: "01",
-                icon: <BriefcaseBusiness className="h-6 w-6" />,
+                icon: <Briefcase className="h-6 w-6" />,
                 title: "Post your job",
                 description:
                   "Define the role, required skills, experience level, and education criteria. This becomes the AI's scoring rubric.",
@@ -425,7 +427,7 @@ export default function HomePage() {
               },
               {
                 num: "02",
-                icon: <ScanSearch className="h-6 w-6" />,
+                icon: <FileMagnifyingGlass className="h-6 w-6" />,
                 title: "Upload CVs in bulk",
                 description:
                   "Drop up to 1,000 PDF or DOCX files. Our pipeline parses, extracts, and enriches every candidate profile automatically.",

@@ -1,7 +1,7 @@
 "use client";
 
 import { getTierColor, getTierLabel, type InstitutionTier } from "@/lib/kenyan-institutions";
-import { GraduationCap } from "lucide-react";
+import { GraduationCap } from "@phosphor-icons/react";
 import { cn } from "@/lib/utils";
 
 export function KenyanInstitutionBadge({

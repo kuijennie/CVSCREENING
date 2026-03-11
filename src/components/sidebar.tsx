@@ -3,14 +3,14 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
-  LayoutDashboard,
+  SquaresFour,
   Briefcase,
-  Upload,
+  UploadSimple,
   Users,
-  Settings,
-  Menu,
+  Gear,
+  List,
   X,
-} from "lucide-react";
+} from "@phosphor-icons/react";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 
@@ -18,7 +18,7 @@ const navItems = [
   {
     label: "Overview",
     href: "/dashboard",
-    icon: LayoutDashboard,
+    icon: SquaresFour,
   },
   {
     label: "Jobs",
@@ -28,7 +28,7 @@ const navItems = [
   {
     label: "Upload CVs",
     href: "/dashboard/upload",
-    icon: Upload,
+    icon: UploadSimple,
   },
   {
     label: "Candidates",
@@ -38,7 +38,7 @@ const navItems = [
   {
     label: "Settings",
     href: "/dashboard/settings",
-    icon: Settings,
+    icon: Gear,
   },
 ];
 
@@ -53,7 +53,7 @@ export function Sidebar() {
         className="lg:hidden fixed top-4 left-4 z-50 p-2 rounded-lg bg-[var(--card)] border border-[var(--border)] shadow-sm"
         onClick={() => setMobileOpen(!mobileOpen)}
       >
-        {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+        {mobileOpen ? <X className="h-5 w-5" /> : <List className="h-5 w-5" />}
       </button>
 
       {/* Overlay */}

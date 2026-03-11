@@ -6,15 +6,15 @@ import { useUser } from "@clerk/nextjs";
 import { useState } from "react";
 import {
   Users,
-  Search,
-  Trash2,
+  MagnifyingGlass,
+  Trash,
   GraduationCap,
   Briefcase,
-  Mail,
+  Envelope,
   Phone,
-  ChevronDown,
-  ChevronUp,
-} from "lucide-react";
+  CaretDown,
+  CaretUp,
+} from "@phosphor-icons/react";
 import { KenyanInstitutionBadge } from "@/components/kenyan-institution-badge";
 import type { InstitutionTier } from "@/lib/kenyan-institutions";
 
@@ -60,7 +60,7 @@ export default function CandidatesPage() {
       {/* Search & Filter */}
       <div className="flex flex-col sm:flex-row gap-3 mb-6">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--muted-foreground)]" />
+          <MagnifyingGlass className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--muted-foreground)]" />
           <input
             type="text"
             value={searchTerm}
@@ -158,12 +158,12 @@ export default function CandidatesPage() {
                     }}
                     className="p-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-950 text-red-500"
                   >
-                    <Trash2 className="h-4 w-4" />
+                    <Trash className="h-4 w-4" />
                   </button>
                   {expandedId === candidate._id ? (
-                    <ChevronUp className="h-4 w-4 text-[var(--muted-foreground)]" />
+                    <CaretUp className="h-4 w-4 text-[var(--muted-foreground)]" />
                   ) : (
-                    <ChevronDown className="h-4 w-4 text-[var(--muted-foreground)]" />
+                    <CaretDown className="h-4 w-4 text-[var(--muted-foreground)]" />
                   )}
                 </div>
               </div>
@@ -176,7 +176,7 @@ export default function CandidatesPage() {
                       <h4 className="text-sm font-semibold mb-2">Contact</h4>
                       {candidate.email && (
                         <p className="text-sm text-[var(--muted-foreground)] flex items-center gap-1">
-                          <Mail className="h-3 w-3" /> {candidate.email}
+                          <Envelope className="h-3 w-3" /> {candidate.email}
                         </p>
                       )}
                       {candidate.phone && (
@@ -239,7 +239,7 @@ export default function CandidatesPage() {
                         {candidate.certifications.map((cert, i) => (
                           <span
                             key={i}
-                            className="px-2 py-0.5 rounded-full bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200 text-xs"
+                            className="px-2 py-0.5 rounded-full bg-[var(--primary)]/10 text-[var(--primary)] text-xs"
                           >
                             {cert}
                           </span>

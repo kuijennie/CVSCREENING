@@ -3,7 +3,7 @@
 import { useUser } from "@clerk/nextjs";
 import { useTheme } from "next-themes";
 import { useState, useEffect } from "react";
-import { Sun, Moon, Monitor, Check } from "lucide-react";
+import { Sun, Moon, Monitor, Check } from "@phosphor-icons/react";
 
 export default function SettingsPage() {
   const { user } = useUser();
@@ -140,33 +140,33 @@ export default function SettingsPage() {
           organized by tier for bonus scoring.
         </p>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          <div className="p-3 rounded-lg bg-emerald-50 dark:bg-emerald-950 border border-emerald-200 dark:border-emerald-800">
-            <p className="font-semibold text-emerald-700 dark:text-emerald-300 text-sm">Top Tier</p>
+          <div className="p-3 rounded-lg bg-[var(--primary)]/10 border border-[var(--primary)]/30">
+            <p className="font-semibold text-[var(--primary)] text-sm">Top Tier</p>
             <p className="text-xs text-[var(--muted-foreground)] mt-1">
               UoN, KU, JKUAT, Strathmore, USIU, Moi, Egerton
             </p>
-            <p className="text-xs font-medium text-emerald-600 mt-1">+5 bonus</p>
+            <p className="text-xs font-medium text-[var(--primary)] mt-1">+5 bonus</p>
           </div>
-          <div className="p-3 rounded-lg bg-purple-50 dark:bg-purple-950 border border-purple-200 dark:border-purple-800">
-            <p className="font-semibold text-purple-700 dark:text-purple-300 text-sm">Professional</p>
+          <div className="p-3 rounded-lg bg-[var(--primary)]/10 border border-[var(--primary)]/30">
+            <p className="font-semibold text-[var(--primary)] text-sm">Professional</p>
             <p className="text-xs text-[var(--muted-foreground)] mt-1">
               KASNEB, ICPAK, LSK, EBK, KMPDC
             </p>
-            <p className="text-xs font-medium text-purple-600 mt-1">+4 bonus</p>
+            <p className="text-xs font-medium text-[var(--primary)] mt-1">+4 bonus</p>
           </div>
-          <div className="p-3 rounded-lg bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800">
-            <p className="font-semibold text-blue-700 dark:text-blue-300 text-sm">Universities</p>
+          <div className="p-3 rounded-lg bg-[var(--primary)]/10 border border-[var(--primary)]/30">
+            <p className="font-semibold text-[var(--primary)] text-sm">Universities</p>
             <p className="text-xs text-[var(--muted-foreground)] mt-1">
               Maseno, DeKUT, TUK, MMU, KCA, MKU, Daystar...
             </p>
-            <p className="text-xs font-medium text-blue-600 mt-1">+3 bonus</p>
+            <p className="text-xs font-medium text-[var(--primary)] mt-1">+3 bonus</p>
           </div>
-          <div className="p-3 rounded-lg bg-amber-50 dark:bg-amber-950 border border-amber-200 dark:border-amber-800">
-            <p className="font-semibold text-amber-700 dark:text-amber-300 text-sm">TVET</p>
+          <div className="p-3 rounded-lg bg-[var(--primary)]/10 border border-[var(--primary)]/30">
+            <p className="font-semibold text-[var(--primary)] text-sm">TVET</p>
             <p className="text-xs text-[var(--muted-foreground)] mt-1">
               Kenya Poly, Mombasa Poly, KMTC, KIM
             </p>
-            <p className="text-xs font-medium text-amber-600 mt-1">+2 bonus</p>
+            <p className="text-xs font-medium text-[var(--primary)] mt-1">+2 bonus</p>
           </div>
         </div>
       </div>

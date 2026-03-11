@@ -4,7 +4,7 @@ import { useQuery, useMutation, useAction } from "convex/react";
 import { api } from "../../../../convex/_generated/api";
 import { useUser } from "@clerk/nextjs";
 import { useState, useCallback, useRef } from "react";
-import { Upload, FileText, CheckCircle, XCircle, Loader2, AlertCircle } from "lucide-react";
+import { UploadSimple, FileText, CheckCircle, XCircle, CircleNotch, Warning } from "@phosphor-icons/react";
 import { Id } from "../../../../convex/_generated/dataModel";
 
 export default function UploadPage() {
@@ -213,7 +213,7 @@ export default function UploadPage() {
         </select>
         {!jobs?.length && (
           <p className="text-sm text-amber-600 mt-2">
-            <AlertCircle className="h-3 w-3 inline mr-1" />
+            <Warning className="h-3 w-3 inline mr-1" />
             Create a job first before uploading CVs.
           </p>
         )}
@@ -239,7 +239,7 @@ export default function UploadPage() {
           className="hidden"
           disabled={uploading}
         />
-        <Upload className="h-12 w-12 mx-auto mb-4 text-[var(--muted-foreground)]" />
+        <UploadSimple className="h-12 w-12 mx-auto mb-4 text-[var(--muted-foreground)]" />
         <p className="text-lg font-medium mb-1">
           Drag & drop CVs here, or click to browse
         </p>
@@ -268,7 +268,7 @@ export default function UploadPage() {
                   disabled={!selectedJobId}
                   className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[var(--primary)] text-[var(--primary-foreground)] text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-90"
                 >
-                  <Upload className="h-4 w-4" />
+                  <UploadSimple className="h-4 w-4" />
                   Start Screening
                 </button>
               </div>
@@ -281,11 +281,11 @@ export default function UploadPage() {
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2">
                   {status === "done" ? (
-                    <CheckCircle className="h-5 w-5 text-emerald-500" />
+                    <CheckCircle className="h-5 w-5 text-[var(--primary)]" />
                   ) : status === "error" ? (
                     <XCircle className="h-5 w-5 text-red-500" />
                   ) : (
-                    <Loader2 className="h-5 w-5 animate-spin text-[var(--primary)]" />
+                    <CircleNotch className="h-5 w-5 animate-spin text-[var(--primary)]" />
                   )}
                   <span className="text-sm font-medium">
                     {status === "uploading" && "Uploading files..."}

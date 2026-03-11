@@ -2,7 +2,7 @@
 
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
-import { Moon, Sun, Monitor } from "lucide-react";
+import { Moon, Sun, Monitor } from "@phosphor-icons/react";
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
