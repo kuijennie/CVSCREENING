@@ -113,7 +113,17 @@ export default function JobDetailPage() {
       )
     ) : null;
 
-  const chartColors = ["#ccfbf1", "#99f6e4", "#5eead4", "#2dd4bf", "#14b8a6", "#0D9488", "#0f766e", "#115e59", "#0d4f4a", "#083d3a"];
+  const chartData = stats?.distribution || [];
+  const maxDistributionCount = Math.max(
+    1,
+    ...(stats?.distribution?.map((item) => item.count) || [1])
+  );
+  const barColor = (label: number) => {
+    if (label > 80) return "#0f766e";
+    if (label > 60) return "#14b8a6";
+    if (label > 40) return "#5eead4";
+    return "#99f6e4";
+  };
 
   return (
     <div>
@@ -127,8 +137,7 @@ export default function JobDetailPage() {
         <div className="flex-1">
           <h1 className="text-2xl font-bold">{job.title}</h1>
           <p className="text-[var(--muted-foreground)] text-sm">
-            {job.requirements.skills.join(", ")} &middot;{" "}
-            {job.requirements.minExperience}+ years
+            {job.requirements.skills.join(", ")}
           </p>
         </div>
         <button
@@ -174,12 +183,32 @@ export default function JobDetailPage() {
       {stats && stats.distribution && stats.total > 0 && (
         <div className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-4 mb-6">
           <h3 className="font-semibold mb-4">Score Distribution</h3>
-          <ResponsiveContainer width="100%" height={200}>
-            <BarChart data={stats.distribution}>
+          <ResponsiveContainer width="100%" height={240}>
+            <BarChart
+              data={chartData}
+              margin={{ top: 8, right: 12, left: 12, bottom: 44 }}
+            >
               <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
-              <XAxis dataKey="range" fontSize={12} />
-              <YAxis fontSize={12} />
+              <XAxis
+                dataKey="label"
+                type="category"
+                fontSize={12}
+                tickMargin={8}
+                label={{ value: "Score", position: "bottom", offset: 12 }}
+              />
+              <YAxis
+                fontSize={12}
+                allowDecimals={false}
+                ticks={Array.from({ length: maxDistributionCount + 1 }, (_, i) => i)}
+                domain={[0, maxDistributionCount]}
+                label={{ value: "Candidates", angle: -90, position: "insideLeft" }}
+              />
               <Tooltip
+                formatter={(value) => [value ?? 0, "Candidates"]}
+                labelFormatter={(label) => {
+                  const item = chartData.find((d) => String(d.label) === String(label));
+                  return `Score range: ${item?.range ?? label}`;
+                }}
                 contentStyle={{
                   backgroundColor: "var(--card)",
                   border: "1px solid var(--border)",
@@ -187,8 +216,8 @@ export default function JobDetailPage() {
                 }}
               />
               <Bar dataKey="count" radius={[4, 4, 0, 0]}>
-                {stats.distribution.map((_, index) => (
-                  <Cell key={`cell-${index}`} fill={chartColors[index]} />
+                {chartData.map((item, index) => (
+                  <Cell key={`cell-${index}`} fill={barColor(item.label)} />
                 ))}
               </Bar>
             </BarChart>

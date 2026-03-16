@@ -12,8 +12,7 @@ export default function SettingsPage() {
 
   const [weights, setWeights] = useState({
     skills: 40,
-    experience: 30,
-    education: 20,
+    education: 30,
     certifications: 10,
   });
 
@@ -105,7 +104,6 @@ export default function SettingsPage() {
           {(
             [
               { key: "skills", label: "Skills Match" },
-              { key: "experience", label: "Experience" },
               { key: "education", label: "Education" },
               { key: "certifications", label: "Certifications" },
             ] as const

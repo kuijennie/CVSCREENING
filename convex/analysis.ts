@@ -25,8 +25,8 @@ export const analyzeCv = action({
 
     const weights = job.scoringWeights || {
       skills: 40,
-      experience: 30,
-      education: 20,
+      experience: 0,
+      education: 30,
       certifications: 10,
     };
 
@@ -36,7 +36,6 @@ JOB REQUIREMENTS:
 - Title: ${job.title}
 - Description: ${job.description}
 - Required Skills: ${job.requirements.skills.join(", ")}
-- Minimum Experience: ${job.requirements.minExperience} years
 - Education Level: ${job.requirements.educationLevel}
 ${job.requirements.customRequirements ? `- Additional: ${job.requirements.customRequirements}` : ""}
 
@@ -122,6 +121,8 @@ ${args.rawText.substring(0, 6000)}
 Respond in this exact JSON format:
 {
   "name": "<full name>",
+  "age": "<age as number or null>",
+  "dateOfBirth": "<date of birth or null>",
   "email": "<email or null>",
   "phone": "<phone or null>",
   "summary": "<brief professional summary>",

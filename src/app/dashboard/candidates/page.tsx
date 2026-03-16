@@ -41,7 +41,6 @@ export default function CandidatesPage() {
   const [filterTier, setFilterTier] = useState<string>("all");
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
-  // Build a unified candidate list depending on whether a job filter is active
   const candidateList = filterJobId !== "all"
     ? (jobRankings || [])
         .filter((r) => r.candidate)
@@ -81,8 +80,7 @@ export default function CandidatesPage() {
         </p>
       </div>
 
-      {/* Search & Filters */}
-      <div className="flex flex-col sm:flex-row gap-3 mb-6">
+      <div className="flex flex-col gap-3 mb-6">
         <div className="relative flex-1">
           <MagnifyingGlass className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--muted-foreground)]" />
           <input
@@ -93,36 +91,37 @@ export default function CandidatesPage() {
             className="w-full pl-10 pr-3 py-2 rounded-lg border border-[var(--input)] bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
           />
         </div>
-        <select
-          value={filterJobId}
-          onChange={(e) => setFilterJobId(e.target.value)}
-          className="px-3 py-2 rounded-lg border border-[var(--input)] bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
-        >
-          <option value="all">All Jobs</option>
-          {jobs?.map((job) => (
-            <option key={job._id} value={job._id}>
-              {job.title}
-            </option>
-          ))}
-        </select>
-        <select
-          value={filterTier}
-          onChange={(e) => setFilterTier(e.target.value)}
-          className="px-3 py-2 rounded-lg border border-[var(--input)] bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
-        >
-          <option value="all">All Institutions</option>
-          <option value="top">Top Tier Universities</option>
-          <option value="mid">Mid Tier Universities</option>
-          <option value="tvet">TVET Institutions</option>
-          <option value="professional">Professional Bodies</option>
-        </select>
+        <div className="flex flex-col lg:flex-row gap-3">
+          <select
+            value={filterJobId}
+            onChange={(e) => setFilterJobId(e.target.value)}
+            className="px-3 py-2 rounded-lg border border-[var(--input)] bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
+          >
+            <option value="all">All Jobs</option>
+            {jobs?.map((job) => (
+              <option key={job._id} value={job._id}>
+                {job.title}
+              </option>
+            ))}
+          </select>
+          <select
+            value={filterTier}
+            onChange={(e) => setFilterTier(e.target.value)}
+            className="px-3 py-2 rounded-lg border border-[var(--input)] bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
+          >
+            <option value="all">All Institutions</option>
+            <option value="top">Top Tier Universities</option>
+            <option value="mid">Mid Tier Universities</option>
+            <option value="tvet">TVET Institutions</option>
+            <option value="professional">Professional Bodies</option>
+          </select>
+        </div>
       </div>
 
-      {/* Score breakdown header when job is selected */}
       {filterJobId !== "all" && filtered.length > 0 && (
         <div className="flex gap-2 mb-4 text-xs text-[var(--muted-foreground)] items-center">
           <JobIcon className="h-3.5 w-3.5" />
-          <span>Showing scores for <strong className="text-[var(--foreground)]">{selectedJob?.title}</strong> — ranked highest to lowest</span>
+          <span>Showing scores for <strong className="text-[var(--foreground)]">{selectedJob?.title}</strong> - ranked highest to lowest</span>
         </div>
       )}
 
@@ -130,7 +129,6 @@ export default function CandidatesPage() {
         {filtered.length} candidate{filtered.length !== 1 ? "s" : ""}
       </p>
 
-      {/* Candidates */}
       {filtered.length === 0 ? (
         <div className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-12 text-center">
           <Users className="h-16 w-16 mx-auto mb-4 text-[var(--muted-foreground)] opacity-30" />
@@ -149,6 +147,7 @@ export default function CandidatesPage() {
         <div className="space-y-3">
           {filtered.map((candidate, index) => {
             const ranking = candidate.bestRanking;
+
             return (
               <div
                 key={candidate._id}
@@ -183,7 +182,6 @@ export default function CandidatesPage() {
                           ))}
                       </div>
 
-                      {/* Score breakdown when job is selected */}
                       {filterJobId !== "all" && ranking && (
                         <div className="flex gap-3 mb-2">
                           <span className="text-xs text-[var(--muted-foreground)]">
@@ -242,7 +240,6 @@ export default function CandidatesPage() {
 
                 {expandedId === candidate._id && (
                   <div className="border-t border-[var(--border)] bg-[var(--secondary)] p-4">
-                    {/* AI Summary when job selected */}
                     {filterJobId !== "all" && ranking?.aiSummary && (
                       <div className="mb-4 p-3 rounded-lg bg-[var(--card)] border border-[var(--border)]">
                         <h4 className="text-sm font-semibold mb-1">AI Analysis</h4>
@@ -260,7 +257,7 @@ export default function CandidatesPage() {
                           <div className="mt-1 flex flex-wrap gap-1">
                             {ranking.weaknesses.map((w, i) => (
                               <span key={i} className="text-xs px-2 py-0.5 rounded-full bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200">
-                                − {w}
+                                - {w}
                               </span>
                             ))}
                           </div>
@@ -269,7 +266,6 @@ export default function CandidatesPage() {
                     )}
 
                     <div className="grid md:grid-cols-3 gap-6">
-                      {/* Contact */}
                       <div>
                         <h4 className="text-sm font-semibold mb-2">Contact</h4>
                         {candidate.email && (
@@ -287,7 +283,6 @@ export default function CandidatesPage() {
                         </p>
                       </div>
 
-                      {/* Education */}
                       <div>
                         <h4 className="text-sm font-semibold mb-2 flex items-center gap-1">
                           <GraduationCap className="h-4 w-4" /> Education
@@ -311,7 +306,6 @@ export default function CandidatesPage() {
                         ))}
                       </div>
 
-                      {/* Experience */}
                       <div>
                         <h4 className="text-sm font-semibold mb-2 flex items-center gap-1">
                           <Briefcase className="h-4 w-4" /> Experience
@@ -329,7 +323,6 @@ export default function CandidatesPage() {
                       </div>
                     </div>
 
-                    {/* Certifications */}
                     {candidate.certifications.length > 0 && (
                       <div className="mt-4">
                         <h4 className="text-sm font-semibold mb-1">Certifications</h4>

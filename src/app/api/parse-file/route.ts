@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
+export const runtime = "nodejs";
+
 export async function POST(request: NextRequest) {
   const formData = await request.formData();
   const file = formData.get("file") as File;
@@ -13,8 +15,10 @@ export async function POST(request: NextRequest) {
 
   try {
     if (file.name.endsWith(".pdf")) {
-      const pdfParse = (await import("pdf-parse")).default;
-      const data = await pdfParse(buffer);
+      const { PDFParse } = await import("pdf-parse");
+      const parser = new PDFParse({ data: buffer });
+      const data = await parser.getText();
+      await parser.destroy();
       return NextResponse.json({ text: data.text });
     } else if (file.name.endsWith(".docx")) {
       const mammoth = await import("mammoth");

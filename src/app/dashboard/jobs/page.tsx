@@ -20,7 +20,6 @@ export default function JobsPage() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [skills, setSkills] = useState("");
-  const [minExperience, setMinExperience] = useState(0);
   const [educationLevel, setEducationLevel] = useState("bachelor");
   const [customRequirements, setCustomRequirements] = useState("");
 
@@ -33,7 +32,7 @@ export default function JobsPage() {
       description,
       requirements: {
         skills: skills.split(",").map((s) => s.trim()).filter(Boolean),
-        minExperience,
+        minExperience: 0,
         educationLevel,
         customRequirements: customRequirements || undefined,
       },
@@ -44,7 +43,6 @@ export default function JobsPage() {
     setTitle("");
     setDescription("");
     setSkills("");
-    setMinExperience(0);
     setCustomRequirements("");
     setShowForm(false);
   };
@@ -106,19 +104,7 @@ export default function JobsPage() {
                 required
               />
             </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium mb-1">
-                  Min Experience (years)
-                </label>
-                <input
-                  type="number"
-                  value={minExperience}
-                  onChange={(e) => setMinExperience(Number(e.target.value))}
-                  className="w-full px-3 py-2 rounded-lg border border-[var(--input)] bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
-                  min={0}
-                />
-              </div>
+            <div className="grid grid-cols-1 gap-4">
               <div>
                 <label className="block text-sm font-medium mb-1">
                   Education Level
