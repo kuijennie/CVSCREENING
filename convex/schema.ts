@@ -91,4 +91,12 @@ export default defineSchema({
     organizationId: v.string(),
     createdBy: v.string(),
   }).index("by_org", ["organizationId"]),
+
+  // Organizational schema
+  organizations: defineTable({
+  name: v.string(),
+  ownerId: v.string(),
+  industry: v.optional(v.string()),
+  createdAt: v.number(),
+}).index("by_owner", ["ownerId"]),
 });
