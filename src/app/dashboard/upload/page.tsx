@@ -7,6 +7,32 @@ import { useState, useCallback, useRef } from "react";
 import { UploadSimple, FileText, CheckCircle, XCircle, CircleNotch, Warning } from "@phosphor-icons/react";
 import { Id } from "../../../../convex/_generated/dataModel";
 
+function cleanDate(value: unknown) {
+  return typeof value === "string" && value.trim() && value !== "null"
+    ? value.trim()
+    : undefined;
+}
+
+function computeAgeFromDateOfBirth(dateOfBirth?: string) {
+  if (!dateOfBirth) return undefined;
+
+  const parsed = new Date(dateOfBirth);
+  if (Number.isNaN(parsed.getTime())) return undefined;
+
+  const today = new Date();
+  let age = today.getFullYear() - parsed.getFullYear();
+  const monthDelta = today.getMonth() - parsed.getMonth();
+
+  if (
+    monthDelta < 0 ||
+    (monthDelta === 0 && today.getDate() < parsed.getDate())
+  ) {
+    age -= 1;
+  }
+
+  return age >= 0 ? age : undefined;
+}
+
 export default function UploadPage() {
   const { user } = useUser();
   const orgId = user?.id || "";
@@ -96,6 +122,14 @@ export default function UploadPage() {
           // Parse with AI
           const parsed = await parseCv({ rawText: text, fileName: file.name });
 
+          // Helper to reject AI placeholder/null strings
+          const clean = (val: unknown) =>
+            typeof val === "string" && val.trim() && !val.startsWith("<") && val !== "null"
+              ? val.trim()
+              : undefined;
+          const cleanNumber = (val: unknown) =>
+            typeof val === "number" && Number.isFinite(val) && val > 0 ? val : undefined;
+
           // Upload file to Convex storage
           const uploadUrl = await generateUploadUrl({});
           const uploadResult = await fetch(uploadUrl, {
@@ -107,34 +141,84 @@ export default function UploadPage() {
 
           // Detect Kenyan institutions
           const { findAllKenyanInstitutions } = await import("@/lib/kenyan-institutions");
-          const education = (parsed.education || []).map((edu: { institution: string; degree: string; field?: string; year?: string }) => {
-            const matches = findAllKenyanInstitutions(edu.institution);
-            const match = matches[0];
-            return {
-              institution: edu.institution,
-              degree: edu.degree,
-              field: edu.field || undefined,
-              year: edu.year || undefined,
-              isKenyan: !!match,
-              institutionTier: match?.institution.tier || undefined,
-            };
-          });
+          const education = (parsed.education || [])
+            .map((edu: { institution?: unknown; degree?: unknown; field?: unknown; year?: unknown }) => {
+              const institution = clean(edu.institution);
+              const degree = clean(edu.degree);
+
+              if (!institution || !degree) return null;
+
+              const matches = findAllKenyanInstitutions(institution);
+              const match = matches[0];
+              return {
+                institution,
+                degree,
+                field: clean(edu.field),
+                year: clean(edu.year),
+                isKenyan: !!match,
+                institutionTier: match?.institution.tier || undefined,
+              };
+            })
+            .filter((edu: {
+              institution: string;
+              degree: string;
+              field?: string;
+              year?: string;
+              isKenyan: boolean;
+              institutionTier?: string;
+            } | null): edu is {
+              institution: string;
+              degree: string;
+              field?: string;
+              year?: string;
+              isKenyan: boolean;
+              institutionTier?: string;
+            } => Boolean(edu));
+
+          const experience = (parsed.experience || [])
+            .map((exp: { company?: unknown; role?: unknown; duration?: unknown; description?: unknown }) => {
+              const company = clean(exp.company);
+              const role = clean(exp.role);
+
+              if (!company || !role) return null;
+
+              return {
+                company,
+                role,
+                duration: clean(exp.duration),
+                description: clean(exp.description),
+              };
+            })
+            .filter((exp: {
+              company: string;
+              role: string;
+              duration?: string;
+              description?: string;
+            } | null): exp is {
+              company: string;
+              role: string;
+              duration?: string;
+              description?: string;
+            } => Boolean(exp));
+          const dateOfBirth = cleanDate(parsed.dateOfBirth);
+          const inferredAge = computeAgeFromDateOfBirth(dateOfBirth);
 
           // Save candidate
           const candidateId = await createCandidate({
-            name: parsed.name || file.name.replace(/\.(pdf|docx)$/i, ""),
-            email: parsed.email || undefined,
-            phone: parsed.phone || undefined,
-            summary: parsed.summary || undefined,
+            name: clean(parsed.name) || file.name.replace(/\.(pdf|docx)$/i, ""),
+            age: cleanNumber(parsed.age) ?? inferredAge,
+            dateOfBirth,
+            email: clean(parsed.email),
+            phone: clean(parsed.phone),
+            summary: clean(parsed.summary),
             education,
-            experience: (parsed.experience || []).map((exp: { company: string; role: string; duration?: string; description?: string }) => ({
-              company: exp.company,
-              role: exp.role,
-              duration: exp.duration || undefined,
-              description: exp.description || undefined,
-            })),
-            skills: parsed.skills || [],
-            certifications: parsed.certifications || [],
+            experience,
+            skills: (parsed.skills || [])
+              .map((s: unknown) => clean(s))
+              .filter((s: string | undefined): s is string => Boolean(s)),
+            certifications: (parsed.certifications || [])
+              .map((c: unknown) => clean(c))
+              .filter((c: string | undefined): c is string => Boolean(c)),
             rawText: text,
             fileId: storageId,
             fileName: file.name,
@@ -363,25 +447,25 @@ export default function UploadPage() {
 }
 
 async function readFileAsText(file: File): Promise<string> {
-  if (file.name.endsWith(".pdf")) {
-    const arrayBuffer = await file.arrayBuffer();
-    const buffer = Buffer.from(arrayBuffer);
-    // For PDF parsing, we send the raw text
-    // In production, this would use a server-side PDF parser
-    // For now, we'll try to extract text from the arraybuffer
-    try {
-      const text = new TextDecoder("utf-8", { fatal: false }).decode(buffer);
-      // Basic PDF text extraction - strip binary content
-      const textContent = text
-        .replace(/[^\x20-\x7E\n\r\t]/g, " ")
-        .replace(/\s+/g, " ")
-        .trim();
-      return textContent || `[PDF file: ${file.name}]`;
-    } catch {
-      return `[PDF file: ${file.name}]`;
-    }
-  } else {
-    // DOCX - read as text
-    return await file.text();
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const response = await fetch("/api/parse-file", {
+    method: "POST",
+    body: formData,
+  });
+
+  if (!response.ok) {
+    const payload = await response.json().catch(() => null);
+    throw new Error(
+      payload?.error
+        ? `Could not read ${file.name}: ${payload.error}`
+        : `Could not read ${file.name}.`
+    );
   }
+
+  const { text } = await response.json();
+  if (text && text.trim().length > 20) return text;
+
+  throw new Error(`Could not extract enough text from ${file.name}.`);
 }

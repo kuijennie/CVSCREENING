@@ -69,6 +69,7 @@ export const getByJob = query({
   },
 });
 
+
 export const getStats = query({
   args: { jobId: v.id("jobs") },
   handler: async (ctx, args) => {
@@ -86,13 +87,17 @@ export const getStats = query({
     const topScore = Math.max(...scores);
     const lowScore = Math.min(...scores);
 
-    // Score distribution in buckets of 10
+    // Score distribution in buckets labeled by their upper bound:
+    // 0-10 => 10, 11-20 => 20, ..., 91-100 => 100
     const distribution = Array.from({ length: 10 }, (_, i) => {
-      const min = i * 10;
-      const max = min + 10;
+      const upper = (i + 1) * 10;
+      const lower = i * 10;
       return {
-        range: `${min}-${max}`,
-        count: scores.filter((s) => s >= min && s < max).length,
+        label: upper,
+        range: `${lower + 1}–${upper}`,
+        count: scores.filter((s) =>
+          i === 0 ? s >= 0 && s <= upper : s > lower && s <= upper
+        ).length,
       };
     });
 
