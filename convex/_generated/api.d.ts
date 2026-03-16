@@ -12,6 +12,7 @@ import type * as analysis from "../analysis.js";
 import type * as candidates from "../candidates.js";
 import type * as files from "../files.js";
 import type * as jobs from "../jobs.js";
+import type * as organizations from "../organizations.js";
 import type * as rankings from "../rankings.js";
 import type * as uploadBatches from "../uploadBatches.js";
 
@@ -26,6 +27,7 @@ declare const fullApi: ApiFromModules<{
   candidates: typeof candidates;
   files: typeof files;
   jobs: typeof jobs;
+  organizations: typeof organizations;
   rankings: typeof rankings;
   uploadBatches: typeof uploadBatches;
 }>;
