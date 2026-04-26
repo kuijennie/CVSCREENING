@@ -13,38 +13,21 @@ import {
 } from "@phosphor-icons/react";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
+import { useUser } from "@clerk/nextjs";
 
 const navItems = [
-  {
-    label: "Overview",
-    href: "/dashboard",
-    icon: SquaresFour,
-  },
-  {
-    label: "Jobs",
-    href: "/dashboard/jobs",
-    icon: Briefcase,
-  },
-  {
-    label: "Upload CVs",
-    href: "/dashboard/upload",
-    icon: UploadSimple,
-  },
-  {
-    label: "Candidates",
-    href: "/dashboard/candidates",
-    icon: Users,
-  },
-  {
-    label: "Settings",
-    href: "/dashboard/settings",
-    icon: Gear,
-  },
+  { label: "Overview", href: "/dashboard", icon: SquaresFour },
+  { label: "Jobs", href: "/dashboard/jobs", icon: Briefcase },
+  { label: "Upload CVs", href: "/dashboard/upload", icon: UploadSimple },
+  { label: "Candidates", href: "/dashboard/candidates", icon: Users },
+  { label: "Settings", href: "/dashboard/settings", icon: Gear },
 ];
 
 export function Sidebar() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { user } = useUser();
+  const isAdmin = (user?.publicMetadata as { isAdmin?: boolean })?.isAdmin === true;
 
   return (
     <>
@@ -103,6 +86,27 @@ export function Sidebar() {
             );
           })}
         </nav>
+
+        {isAdmin && (
+          <div className="px-3 mt-4 pt-4 border-t border-[var(--border)]">
+            <p className="text-xs font-medium text-[var(--muted-foreground)] px-3 mb-1 uppercase tracking-wider">
+              Admin
+            </p>
+            <Link
+              href="/dashboard/admin"
+              onClick={() => setMobileOpen(false)}
+              className={cn(
+                "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
+                pathname.startsWith("/dashboard/admin")
+                  ? "bg-[var(--primary)] text-[var(--primary-foreground)]"
+                  : "text-[var(--muted-foreground)] hover:bg-[var(--accent)] hover:text-[var(--accent-foreground)]"
+              )}
+            >
+              <Gear className="h-5 w-5" />
+              Admin Panel
+            </Link>
+          </div>
+        )}
       </aside>
     </>
   );

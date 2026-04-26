@@ -47,3 +47,24 @@ export const update = mutation({
     await ctx.db.patch(id, fields);
   },
 });
+
+export const listAll = query({
+  args: {},
+  handler: async (ctx) => {
+    return await ctx.db.query("organizations").order("desc").collect();
+  },
+});
+
+export const toggleAnonymization = mutation({
+  args: { id: v.id("organizations"), enabled: v.boolean() },
+  handler: async (ctx, args) => {
+    await ctx.db.patch(args.id, { anonymizationEnabled: args.enabled });
+  },
+});
+
+export const toggleSuspend = mutation({
+  args: { id: v.id("organizations"), suspended: v.boolean() },
+  handler: async (ctx, args) => {
+    await ctx.db.patch(args.id, { suspended: args.suspended });
+  },
+});
