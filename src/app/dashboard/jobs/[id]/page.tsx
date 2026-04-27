@@ -203,18 +203,6 @@ export default function JobDetailPage() {
                 domain={[0, maxDistributionCount]}
                 label={{ value: "Candidates", angle: -90, position: "insideLeft" }}
               />
-              <Tooltip
-                formatter={(value) => [value ?? 0, "Candidates"]}
-                labelFormatter={(label) => {
-                  const item = chartData.find((d) => String(d.label) === String(label));
-                  return `Score range: ${item?.range ?? label}`;
-                }}
-                contentStyle={{
-                  backgroundColor: "var(--card)",
-                  border: "1px solid var(--border)",
-                  borderRadius: "8px",
-                }}
-              />
               <Bar dataKey="count" radius={[4, 4, 0, 0]}>
                 {chartData.map((item, index) => (
                   <Cell key={`cell-${index}`} fill={barColor(item.label)} />

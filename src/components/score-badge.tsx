@@ -11,9 +11,9 @@ export function ScoreBadge({
 }) {
   const color =
     score >= 80
-      ? "bg-[var(--primary)]/15 text-[var(--primary)]"
+      ? "text-[var(--primary)]"
       : score >= 60
-        ? "bg-[var(--primary)]/10 text-[var(--primary)]"
+        ? "text-[var(--primary)]"
         : score >= 40
           ? "bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200"
           : "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200";

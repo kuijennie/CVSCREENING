@@ -205,7 +205,7 @@ export default function CandidatesPage() {
                         {candidate.skills.slice(0, 6).map((skill) => (
                           <span
                             key={skill}
-                            className="px-2 py-0.5 rounded-full bg-[var(--secondary)] text-xs"
+                            className="text-xs text-[var(--muted-foreground)]"
                           >
                             {skill}
                           </span>

@@ -30,7 +30,7 @@ export default function AdminOverviewPage() {
           <div key={card.title} className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-5">
             <div className="flex items-center justify-between mb-3">
               <span className="text-sm text-[var(--muted-foreground)]">{card.title}</span>
-              <div className="p-2 rounded-lg bg-[var(--primary)]/10 text-[var(--primary)]">
+              <div className="p-2 text-[var(--primary)]">
                 {card.icon}
               </div>
             </div>

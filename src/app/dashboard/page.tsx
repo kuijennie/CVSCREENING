@@ -117,7 +117,7 @@ function StatCard({
     <div className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-4">
       <div className="flex items-center justify-between mb-3">
         <span className="text-sm text-[var(--muted-foreground)]">{title}</span>
-        <div className={`p-2 rounded-lg ${bg} ${color}`}>{icon}</div>
+        <div className={`p-2 ${color}`}>{icon}</div>
       </div>
       <p className="text-3xl font-bold">{value}</p>
     </div>
