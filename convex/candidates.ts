@@ -100,6 +100,12 @@ export const remove = mutation({
 export const listWithScores = query({
   args: { organizationId: v.string() },
   handler: async (ctx, args) => {
+    const org = await ctx.db
+      .query("organizations")
+      .withIndex("by_owner", (q) => q.eq("ownerId", args.organizationId))
+      .first();
+    const anonymize = org?.anonymizationEnabled ?? false;
+
     const candidates = await ctx.db
       .query("candidates")
       .withIndex("by_org", (q) => q.eq("organizationId", args.organizationId))
@@ -113,7 +119,6 @@ export const listWithScores = query({
           .withIndex("by_candidate", (q) => q.eq("candidateId", candidate._id))
           .collect();
 
-        // Pick the best score across all jobs
         const bestRanking = rankings.sort((a, b) => b.overallScore - a.overallScore)[0];
         return {
           ...candidate,
@@ -123,8 +128,19 @@ export const listWithScores = query({
       })
     );
 
-    // Sort by best score descending (unscored candidates go to the bottom)
-    return enriched.sort((a, b) => (b.bestScore ?? -1) - (a.bestScore ?? -1));
+    const sorted = enriched.sort((a, b) => (b.bestScore ?? -1) - (a.bestScore ?? -1));
+
+    if (!anonymize) return sorted;
+
+    return sorted.map((c, i) => ({
+      ...c,
+      name: `Candidate #${i + 1}`,
+      email: undefined,
+      phone: undefined,
+      gender: undefined,
+      age: undefined,
+      dateOfBirth: undefined,
+    }));
   },
 });
 

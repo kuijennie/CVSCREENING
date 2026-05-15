@@ -49,6 +49,15 @@ export const getByJob = query({
       rankings = rankings.filter((r) => r.overallScore >= args.minScore!);
     }
 
+    const orgId = rankings[0]?.organizationId;
+    const org = orgId
+      ? await ctx.db
+          .query("organizations")
+          .withIndex("by_owner", (q) => q.eq("ownerId", orgId))
+          .first()
+      : null;
+    const anonymize = org?.anonymizationEnabled ?? false;
+
     // Enrich with candidate data
     const enriched = await Promise.all(
       rankings.map(async (ranking) => {
@@ -65,7 +74,22 @@ export const getByJob = query({
       return (bVal || 0) - (aVal || 0);
     });
 
-    return enriched;
+    if (!anonymize) return enriched;
+
+    return enriched.map((r, i) => ({
+      ...r,
+      candidate: r.candidate
+        ? {
+            ...r.candidate,
+            name: `Candidate #${i + 1}`,
+            email: undefined,
+            phone: undefined,
+            gender: undefined,
+            age: undefined,
+            dateOfBirth: undefined,
+          }
+        : r.candidate,
+    }));
   },
 });
 
