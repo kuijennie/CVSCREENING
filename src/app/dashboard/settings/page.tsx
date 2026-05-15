@@ -95,9 +95,9 @@ export default function SettingsPage() {
       </div>
 
       {/* Scoring Defaults */}
-      <div className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-6 mb-6">
+      <div className="rounded-xl border border-(--border) bg-(--card) p-6 mb-6">
         <h2 className="text-lg font-semibold mb-4">Default Scoring Weights</h2>
-        <p className="text-sm text-[var(--muted-foreground)] mb-4">
+        <p className="text-sm text-(--muted-foreground) mb-4">
           Set default weights for how candidates are scored. Individual jobs can override these.
         </p>
         <div className="grid grid-cols-2 gap-4">
@@ -131,9 +131,9 @@ export default function SettingsPage() {
       </div>
 
       {/* Kenyan Institutions */}
-      <div className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-6">
+      <div className="rounded-xl border border-(--border) bg-[var(--card)] p-6">
         <h2 className="text-lg font-semibold mb-4">Kenyan Institution Recognition</h2>
-        <p className="text-sm text-[var(--muted-foreground)] mb-4">
+        <p className="text-sm text-(--muted-foreground) mb-4">
           The platform automatically recognizes 70+ Kenyan educational institutions and professional bodies,
           organized by tier for bonus scoring.
         </p>

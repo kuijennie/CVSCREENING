@@ -98,5 +98,7 @@ export default defineSchema({
   ownerId: v.string(),
   industry: v.optional(v.string()),
   createdAt: v.number(),
+  anonymizationEnabled: v.optional(v.boolean()),
+  suspended: v.optional(v.boolean()),
 }).index("by_owner", ["ownerId"]),
 });
