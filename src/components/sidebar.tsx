@@ -2,25 +2,16 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  SquaresFour,
-  Briefcase,
-  UploadSimple,
-  Users,
-  Gear,
-  List,
-  X,
-} from "@phosphor-icons/react";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { useUser } from "@clerk/nextjs";
 
 const navItems = [
-  { label: "Overview", href: "/dashboard", icon: SquaresFour },
-  { label: "Jobs", href: "/dashboard/jobs", icon: Briefcase },
-  { label: "Upload CVs", href: "/dashboard/upload", icon: UploadSimple },
-  { label: "Candidates", href: "/dashboard/candidates", icon: Users },
-  { label: "Settings", href: "/dashboard/settings", icon: Gear },
+  { label: "Overview", href: "/dashboard" },
+  { label: "Jobs", href: "/dashboard/jobs" },
+  { label: "Upload CVs", href: "/dashboard/upload" },
+  { label: "Candidates", href: "/dashboard/candidates" },
+  { label: "Settings", href: "/dashboard/settings" },
 ];
 
 export function Sidebar() {
@@ -36,7 +27,7 @@ export function Sidebar() {
         className="lg:hidden fixed top-4 left-4 z-50 p-2 rounded-lg bg-[var(--card)] border border-[var(--border)] shadow-sm"
         onClick={() => setMobileOpen(!mobileOpen)}
       >
-        {mobileOpen ? <X className="h-5 w-5" /> : <List className="h-5 w-5" />}
+        {mobileOpen ? "✕" : "☰"}
       </button>
 
       {/* Overlay */}
@@ -56,8 +47,8 @@ export function Sidebar() {
       >
         <div className="p-6">
           <Link href="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-[var(--primary)] flex items-center justify-center">
-              <Users className="h-5 w-5 text-white" />
+            <div className="w-8 h-8 rounded-lg bg-[var(--primary)] flex items-center justify-center text-white font-bold text-sm">
+              CV
             </div>
             <span className="text-lg font-bold">CVScreen AI</span>
           </Link>
@@ -80,7 +71,6 @@ export function Sidebar() {
                     : "text-[var(--muted-foreground)] hover:bg-[var(--accent)] hover:text-[var(--accent-foreground)]"
                 )}
               >
-                <item.icon className="h-5 w-5" />
                 {item.label}
               </Link>
             );

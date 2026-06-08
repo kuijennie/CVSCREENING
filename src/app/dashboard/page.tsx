@@ -3,7 +3,6 @@
 import { useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import { useUser } from "@clerk/nextjs";
-import { Briefcase, Users, ChartBar, TrendUp } from "@phosphor-icons/react";
 
 export default function DashboardPage() {
   const { user } = useUser();
@@ -23,7 +22,7 @@ export default function DashboardPage() {
     <div>
       <div className="mb-8">
         <h1 className="text-2xl font-bold">Dashboard</h1>
-        <p className="text-[var(--muted-foreground)] mt-1">
+        <p className="text-(--muted-foreground) mt-1">
           Welcome back{user?.firstName ? `, ${user.firstName}` : ""}. Here&apos;s your screening overview.
         </p>
       </div>
@@ -33,28 +32,24 @@ export default function DashboardPage() {
         <StatCard
           title="Active Jobs"
           value={activeJobs}
-          icon={<Briefcase className="h-5 w-5" />}
           color="text-[var(--primary)]"
           bg="bg-[var(--primary)]/10"
         />
         <StatCard
           title="Total Candidates"
           value={totalCandidates}
-          icon={<Users className="h-5 w-5" />}
           color="text-[var(--primary)]"
           bg="bg-[var(--primary)]/10"
         />
         <StatCard
           title="CVs Analyzed"
           value={totalAnalyzed}
-          icon={<ChartBar className="h-5 w-5" />}
           color="text-[var(--primary)]"
           bg="bg-[var(--primary)]/10"
         />
         <StatCard
           title="Total Jobs"
           value={jobs?.length || 0}
-          icon={<TrendUp className="h-5 w-5" />}
           color="text-[var(--primary)]"
           bg="bg-[var(--primary)]/10"
         />
@@ -67,7 +62,6 @@ export default function DashboardPage() {
         </div>
         {!jobs || jobs.length === 0 ? (
           <div className="p-8 text-center text-[var(--muted-foreground)]">
-            <Briefcase className="h-12 w-12 mx-auto mb-3 opacity-30" />
             <p>No jobs yet. Create your first job to start screening CVs.</p>
           </div>
         ) : (
@@ -103,13 +97,11 @@ export default function DashboardPage() {
 function StatCard({
   title,
   value,
-  icon,
   color,
   bg,
 }: {
   title: string;
   value: number;
-  icon: React.ReactNode;
   color: string;
   bg: string;
 }) {

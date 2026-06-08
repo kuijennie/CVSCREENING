@@ -4,18 +4,6 @@ import { useQuery, useMutation } from "convex/react";
 import { api } from "../../../../convex/_generated/api";
 import { useUser } from "@clerk/nextjs";
 import { useState } from "react";
-import {
-  Users,
-  MagnifyingGlass,
-  Trash,
-  GraduationCap,
-  Briefcase,
-  Envelope,
-  Phone,
-  CaretDown,
-  CaretUp,
-  Briefcase as JobIcon,
-} from "@phosphor-icons/react";
 import { KenyanInstitutionBadge } from "@/components/kenyan-institution-badge";
 import { ScoreBadge } from "@/components/score-badge";
 import type { InstitutionTier } from "@/lib/kenyan-institutions";
@@ -82,13 +70,12 @@ export default function CandidatesPage() {
 
       <div className="flex flex-col gap-3 mb-6">
         <div className="relative flex-1">
-          <MagnifyingGlass className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--muted-foreground)]" />
           <input
             type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Search by name, skill, or institution..."
-            className="w-full pl-10 pr-3 py-2 rounded-lg border border-[var(--input)] bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
+            className="w-full px-3 py-2 rounded-lg border border-[var(--input)] bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
           />
         </div>
         <div className="flex flex-col lg:flex-row gap-3">
@@ -120,7 +107,6 @@ export default function CandidatesPage() {
 
       {filterJobId !== "all" && filtered.length > 0 && (
         <div className="flex gap-2 mb-4 text-xs text-[var(--muted-foreground)] items-center">
-          <JobIcon className="h-3.5 w-3.5" />
           <span>Showing scores for <strong className="text-[var(--foreground)]">{selectedJob?.title}</strong> - ranked highest to lowest</span>
         </div>
       )}
@@ -131,7 +117,6 @@ export default function CandidatesPage() {
 
       {filtered.length === 0 ? (
         <div className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-12 text-center">
-          <Users className="h-16 w-16 mx-auto mb-4 text-[var(--muted-foreground)] opacity-30" />
           <h3 className="text-lg font-medium mb-2">
             {filterJobId !== "all"
               ? "No candidates screened for this job yet"
@@ -226,15 +211,13 @@ export default function CandidatesPage() {
                           deleteCandidate({ id: candidate._id });
                         }
                       }}
-                      className="p-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-950 text-red-500"
+                      className="px-2 py-1 rounded-lg text-xs hover:bg-red-50 dark:hover:bg-red-950 text-red-500"
                     >
-                      <Trash className="h-4 w-4" />
+                      Delete
                     </button>
-                    {expandedId === candidate._id ? (
-                      <CaretUp className="h-4 w-4 text-[var(--muted-foreground)]" />
-                    ) : (
-                      <CaretDown className="h-4 w-4 text-[var(--muted-foreground)]" />
-                    )}
+                    <span className="text-xs text-[var(--muted-foreground)]">
+                      {expandedId === candidate._id ? "▲" : "▼"}
+                    </span>
                   </div>
                 </div>
 
@@ -269,13 +252,13 @@ export default function CandidatesPage() {
                       <div>
                         <h4 className="text-sm font-semibold mb-2">Contact</h4>
                         {candidate.email && (
-                          <p className="text-sm text-[var(--muted-foreground)] flex items-center gap-1">
-                            <Envelope className="h-3 w-3" /> {candidate.email}
+                          <p className="text-sm text-[var(--muted-foreground)]">
+                            {candidate.email}
                           </p>
                         )}
                         {candidate.phone && (
-                          <p className="text-sm text-[var(--muted-foreground)] flex items-center gap-1">
-                            <Phone className="h-3 w-3" /> {candidate.phone}
+                          <p className="text-sm text-[var(--muted-foreground)]">
+                            {candidate.phone}
                           </p>
                         )}
                         <p className="text-xs text-[var(--muted-foreground)] mt-1">
@@ -284,9 +267,7 @@ export default function CandidatesPage() {
                       </div>
 
                       <div>
-                        <h4 className="text-sm font-semibold mb-2 flex items-center gap-1">
-                          <GraduationCap className="h-4 w-4" /> Education
-                        </h4>
+                        <h4 className="text-sm font-semibold mb-2">Education</h4>
                         {candidate.education.map((edu, i) => (
                           <div key={i} className="mb-2">
                             <p className="text-sm font-medium">{edu.institution}</p>
@@ -307,9 +288,7 @@ export default function CandidatesPage() {
                       </div>
 
                       <div>
-                        <h4 className="text-sm font-semibold mb-2 flex items-center gap-1">
-                          <Briefcase className="h-4 w-4" /> Experience
-                        </h4>
+                        <h4 className="text-sm font-semibold mb-2">Experience</h4>
                         {candidate.experience.map((exp, i) => (
                           <div key={i} className="mb-2">
                             <p className="text-sm font-medium">

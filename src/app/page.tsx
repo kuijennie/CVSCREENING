@@ -1,22 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import {
-  UploadSimple,
-  ChartBar,
-  Users,
-  GraduationCap,
-  Lightning,
-  ShieldCheck,
-  ArrowRight,
-  CheckCircle,
-  Briefcase,
-  FileMagnifyingGlass,
-  ListChecks,
-  BookOpen,
-  Wrench,
-  Medal,
-} from "@phosphor-icons/react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import {
@@ -27,39 +11,39 @@ import {
 // ─── Tier display config ─────────────────────────────────────────────────────
 const TIER_CONFIG: Record<
   InstitutionTier,
-  { label: string; icon: React.ReactNode; color: string; bg: string; border: string }
+  { label: string; icon: string; color: string; bg: string; border: string }
 > = {
   top: {
     label: "Top University",
-    icon: <GraduationCap className="h-3 w-3" />,
+    icon: "🎓",
     color: "#0D9488",
     bg: "rgba(13,148,136,0.10)",
     border: "rgba(13,148,136,0.30)",
   },
   mid: {
     label: "University",
-    icon: <BookOpen className="h-3 w-3" />,
+    icon: "📖",
     color: "#0f766e",
     bg: "rgba(15,118,110,0.10)",
     border: "rgba(15,118,110,0.30)",
   },
   tvet: {
     label: "TVET",
-    icon: <Wrench className="h-3 w-3" />,
+    icon: "🔧",
     color: "#0e7490",
     bg: "rgba(14,116,144,0.10)",
     border: "rgba(14,116,144,0.30)",
   },
   professional: {
     label: "Professional",
-    icon: <Medal className="h-3 w-3" />,
+    icon: "🏅",
     color: "#0D9488",
     bg: "rgba(13,148,136,0.08)",
     border: "rgba(13,148,136,0.25)",
   },
   other: {
     label: "Institution",
-    icon: <GraduationCap className="h-3 w-3" />,
+    icon: "🎓",
     color: "var(--muted-foreground)",
     bg: "transparent",
     border: "var(--border)",
@@ -76,7 +60,7 @@ const MARQUEE_INSTITUTIONS = [
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-[var(--background)]">
+    <div className="min-h-screen bg-(--background)">
       <style>{`
         @keyframes marquee {
           0%   { transform: translateX(0); }
@@ -215,11 +199,11 @@ export default function HomePage() {
       `}</style>
 
       {/* Header */}
-      <header className="border-b border-[var(--border)]">
+      <header className="border-b border-(--border)">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-[var(--primary)] flex items-center justify-center">
-              <Users className="h-5 w-5 text-white" />
+            <div className="w-8 h-8 rounded-lg bg-[var(--primary)] flex items-center justify-center text-white font-bold text-sm">
+              CV
             </div>
             <span className="text-xl font-bold">CVScreen AI</span>
           </div>
@@ -249,12 +233,12 @@ export default function HomePage() {
       {/* Hero */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
 <h1 className="text-4xl sm:text-6xl font-bold tracking-tight mb-6">
-          Screen <span className="text-[var(--primary)]">1000 CVs</span> in
+          Screen <span className="text-(--primary)">1000 CVs</span> in
           minutes,
           <br />
           not weeks
         </h1>
-        <p className="text-lg text-[var(--muted-foreground)] max-w-2xl mx-auto mb-8">
+        <p className="text-lg text-(--muted-foreground) max-w-2xl mx-auto mb-8">
           Upload bulk CVs, let AI analyze and rank candidates against your job
           requirements. Recognizes Kenyan educational institutions with smart
           matching.
@@ -334,7 +318,7 @@ export default function HomePage() {
           </div>
         </div>
 
-        <p className="text-center text-xs text-[var(--muted-foreground)] mt-3 tracking-widest uppercase">
+        <p className="text-center text-xs text-(--muted-foreground) mt-3 tracking-widest uppercase">
           {KENYAN_INSTITUTIONS.length} Kenyan institutions recognized automatically
         </p>
       </div>
@@ -367,7 +351,6 @@ export default function HomePage() {
                   key={item}
                   className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full border border-[var(--border)] text-[var(--muted-foreground)]"
                 >
-                  <CheckCircle className="h-3 w-3 flex-shrink-0 text-[var(--primary)]" />
                   {item}
                 </span>
               ))}
@@ -378,7 +361,6 @@ export default function HomePage() {
                 className="inline-flex items-center gap-2 px-8 py-3 rounded-xl bg-[var(--primary)] text-[var(--primary-foreground)] font-semibold hover:opacity-90 transition-opacity text-base"
               >
                 Get Started
-                <ArrowRight className="h-4 w-4" />
               </Link>
               <Link
                 href="/sign-in"
@@ -402,22 +384,3 @@ export default function HomePage() {
   );
 }
 
-function FeatureCard({
-  icon,
-  title,
-  description,
-}: {
-  icon: React.ReactNode;
-  title: string;
-  description: string;
-}) {
-  return (
-    <div className="p-6 rounded-xl border border-[var(--border)] bg-[var(--card)] hover:shadow-lg transition-shadow">
-      <div className="w-12 h-12 rounded-lg bg-[var(--primary)]/10 flex items-center justify-center text-[var(--primary)] mb-4">
-        {icon}
-      </div>
-      <h3 className="text-lg font-semibold mb-2">{title}</h3>
-      <p className="text-[var(--muted-foreground)] text-sm">{description}</p>
-    </div>
-  );
-}

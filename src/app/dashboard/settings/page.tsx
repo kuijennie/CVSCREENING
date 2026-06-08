@@ -3,7 +3,6 @@
 import { useUser } from "@clerk/nextjs";
 import { useTheme } from "next-themes";
 import { useState, useEffect } from "react";
-import { Sun, Moon, Monitor, Check } from "@phosphor-icons/react";
 
 export default function SettingsPage() {
   const { user } = useUser();
@@ -19,9 +18,9 @@ export default function SettingsPage() {
   useEffect(() => setMounted(true), []);
 
   const themes = [
-    { value: "light", label: "Light", icon: Sun, description: "Classic light appearance" },
-    { value: "dark", label: "Dark", icon: Moon, description: "Easy on the eyes" },
-    { value: "system", label: "System", icon: Monitor, description: "Match your OS setting" },
+    { value: "light", label: "Light", symbol: "☀", description: "Classic light appearance" },
+    { value: "dark", label: "Dark", symbol: "☾", description: "Easy on the eyes" },
+    { value: "system", label: "System", symbol: "⊙", description: "Match your OS setting" },
   ];
 
   return (
@@ -66,7 +65,7 @@ export default function SettingsPage() {
         </p>
         {mounted && (
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            {themes.map(({ value, label, icon: Icon, description }) => (
+            {themes.map(({ value, label, symbol, description }) => (
               <button
                 key={value}
                 onClick={() => setTheme(value)}
@@ -76,12 +75,12 @@ export default function SettingsPage() {
                     : "border-[var(--border)] hover:border-[var(--primary)]/50"
                 }`}
               >
-                <Icon className="h-5 w-5 mt-0.5 shrink-0" />
+                <span className="text-lg mt-0.5 shrink-0">{symbol}</span>
                 <div className="flex-1">
                   <div className="flex items-center gap-2">
                     <span className="font-medium text-sm">{label}</span>
                     {theme === value && (
-                      <Check className="h-4 w-4 text-[var(--primary)]" />
+                      <span className="text-xs text-[var(--primary)]">✓</span>
                     )}
                   </div>
                   <p className="text-xs text-[var(--muted-foreground)] mt-0.5">

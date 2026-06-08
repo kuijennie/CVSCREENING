@@ -8,7 +8,6 @@ import { useEffect } from "react";
 import { Sidebar } from "@/components/sidebar";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { UserButton } from "@clerk/nextjs";
-import { Buildings } from "@phosphor-icons/react";
 
 export default function DashboardLayout({
   children,

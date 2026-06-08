@@ -3,7 +3,6 @@
 import { useQuery, useMutation } from "convex/react";
 import { api } from "../../../../../convex/_generated/api";
 import { Id } from "../../../../../convex/_generated/dataModel";
-import { EyeSlash, Eye, Buildings } from "@phosphor-icons/react";
 import { useState } from "react";
 
 export default function AnonymizationPage() {
@@ -34,7 +33,6 @@ export default function AnonymizationPage() {
 
       {orgs !== undefined && (
         <div className="flex items-center gap-2 text-sm text-[var(--muted-foreground)]">
-          <EyeSlash className="h-4 w-4" />
           {enabledCount} of {orgs.length} organization{orgs.length !== 1 ? "s" : ""} have anonymization enabled.
         </div>
       )}
@@ -63,7 +61,6 @@ export default function AnonymizationPage() {
             {orgs?.length === 0 && (
               <tr>
                 <td colSpan={4} className="px-4 py-10 text-center text-[var(--muted-foreground)]">
-                  <Buildings className="h-10 w-10 mx-auto mb-2 opacity-30" />
                   No organizations yet.
                 </td>
               </tr>
@@ -77,11 +74,11 @@ export default function AnonymizationPage() {
                   <td className="px-4 py-3">
                     {enabled ? (
                       <span className="inline-flex items-center gap-1 text-xs font-medium px-2 py-1 rounded-full bg-[var(--primary)]/10 text-[var(--primary)]">
-                        <EyeSlash className="h-3 w-3" /> Enabled
+                        Enabled
                       </span>
                     ) : (
                       <span className="inline-flex items-center gap-1 text-xs font-medium px-2 py-1 rounded-full bg-[var(--accent)] text-[var(--muted-foreground)]">
-                        <Eye className="h-3 w-3" /> Disabled
+                        Disabled
                       </span>
                     )}
                   </td>

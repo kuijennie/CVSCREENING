@@ -2,18 +2,17 @@
 
 import { useQuery } from "convex/react";
 import { api } from "../../../../convex/_generated/api";
-import { Buildings, Briefcase, Users, ChartBar, ShieldCheck, EyeSlash } from "@phosphor-icons/react";
 
 export default function AdminOverviewPage() {
   const stats = useQuery(api.admin.platformStats);
 
   const cards = [
-    { title: "Total Organizations", value: stats?.totalOrganizations, icon: <Buildings className="h-5 w-5" />, },
-    { title: "Active Organizations", value: stats?.activeOrganizations, icon: <ShieldCheck className="h-5 w-5" />, },
-    { title: "Total Jobs", value: stats?.totalJobs, icon: <Briefcase className="h-5 w-5" />, },
-    { title: "Total Candidates", value: stats?.totalCandidates, icon: <Users className="h-5 w-5" />, },
-    { title: "Total Rankings", value: stats?.totalRankings, icon: <ChartBar className="h-5 w-5" />, },
-    { title: "Anonymization On", value: stats?.anonymizationEnabledCount, icon: <EyeSlash className="h-5 w-5" />, },
+    { title: "Total Organizations", value: stats?.totalOrganizations },
+    { title: "Active Organizations", value: stats?.activeOrganizations },
+    { title: "Total Jobs", value: stats?.totalJobs },
+    { title: "Total Candidates", value: stats?.totalCandidates },
+    { title: "Total Rankings", value: stats?.totalRankings },
+    { title: "Anonymization On", value: stats?.anonymizationEnabledCount },
   ];
 
   return (

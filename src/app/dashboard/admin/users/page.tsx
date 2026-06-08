@@ -3,7 +3,6 @@
 import { useQuery, useMutation } from "convex/react";
 import { api } from "../../../../../convex/_generated/api";
 import { Id } from "../../../../../convex/_generated/dataModel";
-import { Buildings, ProhibitInset, CheckCircle } from "@phosphor-icons/react";
 import { useState } from "react";
 
 export default function ManageUsersPage() {
@@ -54,7 +53,6 @@ export default function ManageUsersPage() {
             {orgs?.length === 0 && (
               <tr>
                 <td colSpan={5} className="px-4 py-10 text-center text-[var(--muted-foreground)]">
-                  <Buildings className="h-10 w-10 mx-auto mb-2 opacity-30" />
                   No organizations registered yet.
                 </td>
               </tr>

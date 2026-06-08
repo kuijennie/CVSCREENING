@@ -8,16 +8,6 @@ import { Id } from "../../../../../convex/_generated/dataModel";
 import { ScoreBadge } from "@/components/score-badge";
 import { KenyanInstitutionBadge } from "@/components/kenyan-institution-badge";
 import type { InstitutionTier } from "@/lib/kenyan-institutions";
-import {
-  ArrowLeft,
-  DownloadSimple,
-  Users,
-  ChartBar,
-  TrendUp,
-  TrendDown,
-  CaretDown,
-  CaretUp,
-} from "@phosphor-icons/react";
 import Link from "next/link";
 import { useState } from "react";
 import {
@@ -106,11 +96,7 @@ export default function JobDetailPage() {
 
   const SortIcon = ({ field }: { field: string }) =>
     sortBy === field ? (
-      sortDir === "desc" ? (
-        <CaretDown className="h-3 w-3" />
-      ) : (
-        <CaretUp className="h-3 w-3" />
-      )
+      sortDir === "desc" ? <span className="text-xs">▼</span> : <span className="text-xs">▲</span>
     ) : null;
 
   const chartData = stats?.distribution || [];
@@ -130,9 +116,9 @@ export default function JobDetailPage() {
       <div className="flex items-center gap-3 mb-6">
         <Link
           href="/dashboard/jobs"
-          className="p-2 rounded-lg hover:bg-[var(--accent)] transition-colors"
+          className="px-3 py-2 rounded-lg hover:bg-[var(--accent)] transition-colors text-sm"
         >
-          <ArrowLeft className="h-5 w-5" />
+          ← Back
         </Link>
         <div className="flex-1">
           <h1 className="text-2xl font-bold">{job.title}</h1>
@@ -144,7 +130,6 @@ export default function JobDetailPage() {
           onClick={exportCSV}
           className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-[var(--border)] hover:bg-[var(--accent)] text-sm font-medium"
         >
-          <DownloadSimple className="h-4 w-4" />
           Export CSV
         </button>
       </div>
@@ -154,25 +139,25 @@ export default function JobDetailPage() {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
           <div className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-4">
             <div className="flex items-center gap-2 text-sm text-[var(--muted-foreground)] mb-1">
-              <Users className="h-4 w-4" /> Candidates
+              Candidates
             </div>
             <p className="text-2xl font-bold">{stats.total}</p>
           </div>
           <div className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-4">
             <div className="flex items-center gap-2 text-sm text-[var(--muted-foreground)] mb-1">
-              <ChartBar className="h-4 w-4" /> Avg Score
+              Avg Score
             </div>
             <p className="text-2xl font-bold">{Math.round(stats.avgScore)}%</p>
           </div>
           <div className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-4">
             <div className="flex items-center gap-2 text-sm text-[var(--muted-foreground)] mb-1">
-              <TrendUp className="h-4 w-4" /> Top Score
+              Top Score
             </div>
             <p className="text-2xl font-bold">{Math.round(stats.topScore)}%</p>
           </div>
           <div className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-4">
             <div className="flex items-center gap-2 text-sm text-[var(--muted-foreground)] mb-1">
-              <TrendDown className="h-4 w-4" /> Low Score
+              Low Score
             </div>
             <p className="text-2xl font-bold">{Math.round(stats.lowScore)}%</p>
           </div>
@@ -235,7 +220,6 @@ export default function JobDetailPage() {
       {/* Rankings Table */}
       {!rankings || rankings.length === 0 ? (
         <div className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-12 text-center">
-          <ChartBar className="h-16 w-16 mx-auto mb-4 text-[var(--muted-foreground)] opacity-30" />
           <h3 className="text-lg font-medium mb-2">No rankings yet</h3>
           <p className="text-[var(--muted-foreground)]">
             Upload CVs and run analysis to see candidate rankings.

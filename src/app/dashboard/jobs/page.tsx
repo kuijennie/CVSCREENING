@@ -4,7 +4,6 @@ import { useQuery, useMutation } from "convex/react";
 import { api } from "../../../../convex/_generated/api";
 import { useUser } from "@clerk/nextjs";
 import { useState } from "react";
-import { Plus, Briefcase, Trash, Eye, ToggleLeft, ToggleRight, PencilSimple, X, Check } from "@phosphor-icons/react";
 import Link from "next/link";
 import { Id } from "../../../../convex/_generated/dataModel";
 
@@ -122,7 +121,6 @@ export default function JobsPage() {
           onClick={() => { setShowForm(!showForm); setEditState(null); }}
           className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[var(--primary)] text-[var(--primary-foreground)] hover:opacity-90 transition-opacity text-sm font-medium"
         >
-          <Plus className="h-4 w-4" />
           New Job
         </button>
       </div>
@@ -214,7 +212,6 @@ export default function JobsPage() {
       {/* ── Jobs List ── */}
       {!jobs || jobs.length === 0 ? (
         <div className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-12 text-center">
-          <Briefcase className="h-16 w-16 mx-auto mb-4 text-[var(--muted-foreground)] opacity-30" />
           <h3 className="text-lg font-medium mb-2">No jobs yet</h3>
           <p className="text-[var(--muted-foreground)] mb-4">
             Create a job posting to define requirements and start screening CVs.
@@ -223,7 +220,6 @@ export default function JobsPage() {
             onClick={() => setShowForm(true)}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[var(--primary)] text-[var(--primary-foreground)] text-sm font-medium"
           >
-            <Plus className="h-4 w-4" />
             Create First Job
           </button>
         </div>
@@ -283,32 +279,28 @@ export default function JobsPage() {
                             status: job.status === "active" ? "inactive" : "active",
                           })
                         }
-                        className="p-2 rounded-lg hover:bg-[var(--accent)] transition-colors"
+                        className="px-2 py-1 rounded-lg text-xs hover:bg-[var(--accent)] transition-colors"
                         title={job.status === "active" ? "Set inactive" : "Set active"}
                       >
-                        {job.status === "active" ? (
-                          <ToggleRight className="h-5 w-5 text-[var(--primary)]" />
-                        ) : (
-                          <ToggleLeft className="h-5 w-5 text-[var(--muted-foreground)]" />
-                        )}
+                        {job.status === "active" ? "Active" : "Inactive"}
                       </button>
 
                       {/* Edit */}
                       <button
                         onClick={() => openEdit(job)}
-                        className="p-2 rounded-lg hover:bg-[var(--accent)] transition-colors"
+                        className="px-2 py-1 rounded-lg text-xs hover:bg-[var(--accent)] transition-colors text-[var(--muted-foreground)]"
                         title="Edit job"
                       >
-                        <PencilSimple className="h-4 w-4 text-[var(--muted-foreground)]" />
+                        Edit
                       </button>
 
                       {/* View rankings */}
                       <Link
                         href={`/dashboard/jobs/${job._id}`}
-                        className="p-2 rounded-lg hover:bg-[var(--accent)] transition-colors"
+                        className="px-2 py-1 rounded-lg text-xs hover:bg-[var(--accent)] transition-colors"
                         title="View rankings"
                       >
-                        <Eye className="h-4 w-4" />
+                        View
                       </Link>
 
                       {/* Delete */}
@@ -318,10 +310,10 @@ export default function JobsPage() {
                             deleteJob({ id: job._id });
                           }
                         }}
-                        className="p-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-950 text-red-500 transition-colors"
+                        className="px-2 py-1 rounded-lg text-xs hover:bg-red-50 dark:hover:bg-red-950 text-red-500 transition-colors"
                         title="Delete job"
                       >
-                        <Trash className="h-4 w-4" />
+                        Delete
                       </button>
                     </div>
                   </div>
@@ -334,15 +326,14 @@ export default function JobsPage() {
                 >
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-2">
-                      <PencilSimple className="h-4 w-4 text-[var(--primary)]" />
                       <h3 className="font-semibold text-sm">Editing: {job.title}</h3>
                     </div>
                     <button
                       onClick={cancelEdit}
-                      className="p-1.5 rounded-lg hover:bg-[var(--accent)] transition-colors"
+                      className="p-1.5 rounded-lg hover:bg-[var(--accent)] transition-colors text-[var(--muted-foreground)]"
                       title="Cancel edit"
                     >
-                      <X className="h-4 w-4 text-[var(--muted-foreground)]" />
+                      ✕
                     </button>
                   </div>
 
@@ -454,7 +445,6 @@ export default function JobsPage() {
                         disabled={saving}
                         className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[var(--primary)] text-[var(--primary-foreground)] hover:opacity-90 disabled:opacity-60 disabled:cursor-not-allowed text-sm font-medium transition-opacity"
                       >
-                        <Check className="h-4 w-4" />
                         {saving ? "Saving..." : "Save Changes"}
                       </button>
                       <button

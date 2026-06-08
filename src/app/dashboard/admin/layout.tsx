@@ -5,13 +5,12 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ShieldCheck, Users, EyeSlash, SquaresFour } from "@phosphor-icons/react";
 import { cn } from "@/lib/utils";
 
 const adminNav = [
-  { label: "Overview", href: "/dashboard/admin", icon: SquaresFour },
-  { label: "Manage Users", href: "/dashboard/admin/users", icon: Users },
-  { label: "Anonymization", href: "/dashboard/admin/anonymization", icon: EyeSlash },
+  { label: "Overview", href: "/dashboard/admin" },
+  { label: "Manage Users", href: "/dashboard/admin/users" },
+  { label: "Anonymization", href: "/dashboard/admin/anonymization" },
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -67,7 +66,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                   : "border-transparent text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
               )}
             >
-              <item.icon className="h-4 w-4" />
               {item.label}
             </Link>
           );
