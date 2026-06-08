@@ -44,6 +44,29 @@ export default function DashboardLayout({
 
   if (org === null) return null;
 
+  if (org.suspended) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[var(--background)]">
+        <div className="max-w-md w-full mx-4 rounded-xl border border-red-500/30 bg-[var(--card)] p-8 text-center space-y-4">
+          <div className="w-12 h-12 rounded-full bg-red-500/10 flex items-center justify-center mx-auto">
+            <Buildings className="h-6 w-6 text-red-500" />
+          </div>
+          <h1 className="text-lg font-semibold text-[var(--foreground)]">Account Suspended</h1>
+          <p className="text-sm text-[var(--muted-foreground)]">
+            Your organization&apos;s account has been suspended by an administrator. You cannot access
+            the dashboard at this time.
+          </p>
+          <p className="text-sm text-[var(--muted-foreground)]">
+            Please contact support to resolve this issue.
+          </p>
+          <div className="pt-2">
+            <UserButton afterSignOutUrl="/" />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-[var(--background)]">
       <Sidebar />

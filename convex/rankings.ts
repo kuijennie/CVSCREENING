@@ -76,20 +76,31 @@ export const getByJob = query({
 
     if (!anonymize) return enriched;
 
-    return enriched.map((r, i) => ({
-      ...r,
-      candidate: r.candidate
-        ? {
-            ...r.candidate,
-            name: `Candidate #${i + 1}`,
-            email: undefined,
-            phone: undefined,
-            gender: undefined,
-            age: undefined,
-            dateOfBirth: undefined,
-          }
-        : r.candidate,
-    }));
+    return enriched.map((r, i) => {
+      const realName = r.candidate?.name ?? "";
+      const anonymizedSummary = realName
+        ? r.aiSummary.replace(
+            new RegExp(realName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "gi"),
+            "The candidate"
+          )
+        : r.aiSummary;
+
+      return {
+        ...r,
+        aiSummary: anonymizedSummary,
+        candidate: r.candidate
+          ? {
+              ...r.candidate,
+              name: `Candidate #${i + 1}`,
+              email: undefined,
+              phone: undefined,
+              gender: undefined,
+              age: undefined,
+              dateOfBirth: undefined,
+            }
+          : r.candidate,
+      };
+    });
   },
 });
 

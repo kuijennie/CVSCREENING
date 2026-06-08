@@ -132,15 +132,33 @@ export const listWithScores = query({
 
     if (!anonymize) return sorted;
 
-    return sorted.map((c, i) => ({
-      ...c,
-      name: `Candidate #${i + 1}`,
-      email: undefined,
-      phone: undefined,
-      gender: undefined,
-      age: undefined,
-      dateOfBirth: undefined,
-    }));
+    return sorted.map((c, i) => {
+      const realName = c.name;
+      const anonymizedBestRanking =
+        c.bestRanking && realName
+          ? {
+              ...c.bestRanking,
+              aiSummary: c.bestRanking.aiSummary.replace(
+                new RegExp(
+                  realName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
+                  "gi"
+                ),
+                "The candidate"
+              ),
+            }
+          : c.bestRanking;
+
+      return {
+        ...c,
+        name: `Candidate #${i + 1}`,
+        email: undefined,
+        phone: undefined,
+        gender: undefined,
+        age: undefined,
+        dateOfBirth: undefined,
+        bestRanking: anonymizedBestRanking,
+      };
+    });
   },
 });
 
