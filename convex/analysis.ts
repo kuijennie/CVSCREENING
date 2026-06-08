@@ -58,7 +58,7 @@ Respond in this exact JSON format:
   "experienceMatch": <0-100>,
   "educationMatch": <0-100>,
   "certificationMatch": <0-100>,
-  "aiSummary": "<2-3 sentence summary of candidate fit>",
+  "aiSummary": "<2-3 sentence summary of candidate fit, always referring to the person as 'The candidate' rather than by name>",
   "strengths": ["<strength1>", "<strength2>", "<strength3>"],
   "weaknesses": ["<weakness1>", "<weakness2>"]
 }`;
