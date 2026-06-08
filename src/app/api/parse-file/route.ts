@@ -12,7 +12,6 @@ export async function POST(request: NextRequest) {
 
   const arrayBuffer = await file.arrayBuffer();
   const buffer = Buffer.from(arrayBuffer);
-
   try {
     if (file.name.endsWith(".pdf")) {
       const { PDFParse } = await import("pdf-parse");

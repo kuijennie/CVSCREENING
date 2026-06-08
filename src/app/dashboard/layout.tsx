@@ -52,15 +52,7 @@ export default function DashboardLayout({
         <header className="sticky top-0 z-30 border-b border-[var(--border)] bg-[var(--background)]/95 backdrop-blur supports-[backdrop-filter]:bg-[var(--background)]/60">
           <div className="flex items-center justify-between h-14 px-4 sm:px-6">
 
-            <div
-              className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium"
-              style={{
-                background: "color-mix(in srgb, var(--primary) 8%, transparent)",
-                border: "1px solid color-mix(in srgb, var(--primary) 20%, transparent)",
-                color: "var(--primary)",
-              }}
-            >
-              <Buildings className="h-3 w-3" weight="duotone" />
+            <div className="text-xs font-medium text-[var(--muted-foreground)]">
               {org.name}
             </div>
 

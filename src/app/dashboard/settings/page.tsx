@@ -119,7 +119,7 @@ export default function SettingsPage() {
                   onChange={(e) =>
                     setWeights((prev) => ({ ...prev, [key]: Number(e.target.value) }))
                   }
-                  className="flex-1"
+                  className="flex-1 accent-[var(--primary)]"
                 />
                 <span className="text-sm font-medium w-10 text-right">
                   {weights[key]}%

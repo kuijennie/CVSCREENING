@@ -15,8 +15,8 @@ export function ScoreBadge({
       : score >= 60
         ? "text-[var(--primary)]"
         : score >= 40
-          ? "bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200"
-          : "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200";
+          ? "text-amber-600 dark:text-amber-400"
+          : "text-red-500 dark:text-red-400";
 
   const sizes = {
     sm: "text-xs px-1.5 py-0.5",

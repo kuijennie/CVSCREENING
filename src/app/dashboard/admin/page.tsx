@@ -28,11 +28,8 @@ export default function AdminOverviewPage() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {cards.map((card) => (
           <div key={card.title} className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-5">
-            <div className="flex items-center justify-between mb-3">
+            <div className="mb-3">
               <span className="text-sm text-[var(--muted-foreground)]">{card.title}</span>
-              <div className="p-2 text-[var(--primary)]">
-                {card.icon}
-              </div>
             </div>
             {stats === undefined ? (
               <div className="h-8 w-16 rounded bg-[var(--accent)] animate-pulse" />

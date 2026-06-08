@@ -244,8 +244,8 @@ export default function JobsPage() {
                         <span
                           className={`px-2 py-0.5 rounded-full text-xs font-medium ${
                             job.status === "active"
-                              ? "bg-[var(--primary)]/10 text-[var(--primary)]"
-                              : "bg-[var(--secondary)] text-[var(--muted-foreground)]"
+                              ? "text-[var(--primary)]"
+                              : "text-[var(--muted-foreground)]"
                           }`}
                         >
                           {job.status}

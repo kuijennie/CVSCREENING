@@ -68,13 +68,9 @@ export default function ManageUsersPage() {
                 </td>
                 <td className="px-4 py-3">
                   {org.suspended ? (
-                    <span className="inline-flex items-center gap-1 text-xs font-medium px-2 py-1 rounded-full bg-red-500/10 text-red-500">
-                      <ProhibitInset className="h-3 w-3" /> Suspended
-                    </span>
+                    <span className="text-xs font-medium text-red-500">Suspended</span>
                   ) : (
-                    <span className="inline-flex items-center gap-1 text-xs font-medium px-2 py-1 rounded-full bg-green-500/10 text-green-600">
-                      <CheckCircle className="h-3 w-3" /> Active
-                    </span>
+                    <span className="text-xs font-medium text-green-600">Active</span>
                   )}
                 </td>
                 <td className="px-4 py-3 text-right">

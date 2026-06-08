@@ -248,11 +248,7 @@ export default function HomePage() {
 
       {/* Hero */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--border)] bg-[var(--secondary)] text-sm text-[var(--muted-foreground)] mb-6">
-          <Lightning className="h-3 w-3 text-[var(--primary)]" />
-          AI-Powered CV Screening
-        </div>
-        <h1 className="text-4xl sm:text-6xl font-bold tracking-tight mb-6">
+<h1 className="text-4xl sm:text-6xl font-bold tracking-tight mb-6">
           Screen <span className="text-[var(--primary)]">1000 CVs</span> in
           minutes,
           <br />
@@ -269,12 +265,6 @@ export default function HomePage() {
             className="px-8 py-3 rounded-lg bg-[var(--primary)] text-[var(--primary-foreground)] font-medium hover:opacity-90 transition-opacity text-lg"
           >
             Start Screening
-          </Link>
-          <Link
-            href="#features"
-            className="px-8 py-3 rounded-lg border border-[var(--border)] hover:bg-[var(--secondary)] transition-colors text-lg"
-          >
-            Learn More
           </Link>
         </div>
       </section>
@@ -303,14 +293,9 @@ export default function HomePage() {
                   style={{ color: "var(--muted-foreground)" }}
                 >
                   <span
-                    className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold"
-                    style={{
-                      background: cfg.bg,
-                      color: cfg.color,
-                      border: `1px solid ${cfg.border}`,
-                    }}
+                    className="inline-flex items-center gap-1 text-[10px] font-semibold"
+                    style={{ color: cfg.color }}
                   >
-                    {cfg.icon}
                     {cfg.label}
                   </span>
                   <span style={{ color: "var(--muted-foreground)", fontSize: "0.7rem" }}>
@@ -353,131 +338,6 @@ export default function HomePage() {
           {KENYAN_INSTITUTIONS.length} Kenyan institutions recognized automatically
         </p>
       </div>
-
-      {/* Features */}
-      <section id="features" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <h2 className="text-3xl font-bold text-center mb-12">
-          Everything you need to hire smarter
-        </h2>
-        <div className="grid md:grid-cols-3 gap-8">
-          <FeatureCard
-            icon={<UploadSimple className="h-6 w-6" />}
-            title="Bulk Upload"
-            description="Upload up to 1000 CVs at once. Supports PDF and DOCX formats with drag & drop."
-          />
-          <FeatureCard
-            icon={<ChartBar className="h-6 w-6" />}
-            title="AI Ranking"
-            description="OpenAI-powered analysis scores candidates on skills, experience, education, and certifications."
-          />
-          <FeatureCard
-            icon={<GraduationCap className="h-6 w-6" />}
-            title="Kenyan Institutions"
-            description="Automatically recognizes 70+ Kenyan universities, TVETs, and professional bodies with tier badges."
-          />
-          <FeatureCard
-            icon={<Lightning className="h-6 w-6" />}
-            title="Real-time Processing"
-            description="Watch rankings update live as CVs are analyzed. Powered by Convex real-time database."
-          />
-          <FeatureCard
-            icon={<ShieldCheck className="h-6 w-6" />}
-            title="Organization Accounts"
-            description="Secure team access with Clerk authentication. Manage roles and permissions."
-          />
-          <FeatureCard
-            icon={<Users className="h-6 w-6" />}
-            title="Smart Filtering"
-            description="Filter by score, skills, education level, institution tier. Export to CSV."
-          />
-        </div>
-      </section>
-
-      {/* How It Works */}
-      <section
-        id="how-it-works"
-        className="py-20"
-        style={{
-          borderTop: "1px solid var(--border)",
-          background: "var(--secondary)",
-        }}
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-14">
-            <p className="text-xs font-semibold text-[var(--primary)] uppercase tracking-widest mb-3">
-              Simple by design
-            </p>
-            <h2 className="text-3xl font-bold tracking-tight mb-3">
-              Your shortlist in 3 steps
-            </h2>
-            <p className="text-[var(--muted-foreground)] max-w-lg mx-auto">
-              From job post to ranked candidates. No manual screening, no spreadsheets.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-6 relative">
-            {[
-              {
-                num: "01",
-                icon: <Briefcase className="h-6 w-6" />,
-                title: "Post your job",
-                description:
-                  "Define the role, required skills, experience level, and education criteria. This becomes the AI's scoring rubric.",
-                detail: "Takes under 2 minutes",
-              },
-              {
-                num: "02",
-                icon: <FileMagnifyingGlass className="h-6 w-6" />,
-                title: "Upload CVs in bulk",
-                description:
-                  "Drop up to 1,000 PDF or DOCX files. Our pipeline parses, extracts, and enriches every candidate profile automatically.",
-                detail: "PDF & DOCX supported",
-              },
-              {
-                num: "03",
-                icon: <ListChecks className="h-6 w-6" />,
-                title: "Review your shortlist",
-                description:
-                  "Candidates are scored, ranked, and ready in minutes. Filter, compare, and export your shortlist with one click.",
-                detail: "Export to CSV instantly",
-              },
-            ].map((step, i) => (
-              <div
-                key={i}
-                className="step-card relative rounded-2xl border border-[var(--border)] bg-[var(--card)] p-8 overflow-hidden"
-              >
-                <span className="step-number">{step.num}</span>
-                {i < 2 && <div className="step-connector" />}
-                <div
-                  className="w-12 h-12 rounded-xl flex items-center justify-center mb-5 relative z-10"
-                  style={{
-                    background: "color-mix(in srgb, var(--primary) 10%, transparent)",
-                    color: "var(--primary)",
-                    border: "1px solid color-mix(in srgb, var(--primary) 22%, transparent)",
-                  }}
-                >
-                  {step.icon}
-                </div>
-                <h3 className="text-lg font-semibold mb-2">{step.title}</h3>
-                <p className="text-sm text-[var(--muted-foreground)] leading-relaxed mb-5">
-                  {step.description}
-                </p>
-                <span
-                  className="inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full"
-                  style={{
-                    background: "color-mix(in srgb, var(--primary) 8%, transparent)",
-                    color: "var(--primary)",
-                    border: "1px solid color-mix(in srgb, var(--primary) 18%, transparent)",
-                  }}
-                >
-                  <CheckCircle className="h-3 w-3" />
-                  {step.detail}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* CTA */}
       <section className="py-20">

@@ -102,7 +102,6 @@ export function Sidebar() {
                   : "text-[var(--muted-foreground)] hover:bg-[var(--accent)] hover:text-[var(--accent-foreground)]"
               )}
             >
-              <Gear className="h-5 w-5" />
               Admin Panel
             </Link>
           </div>

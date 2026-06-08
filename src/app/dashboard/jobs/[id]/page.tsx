@@ -223,7 +223,7 @@ export default function JobDetailPage() {
             max={100}
             value={minScore}
             onChange={(e) => setMinScore(Number(e.target.value))}
-            className="w-32"
+            className="w-32 accent-[var(--primary)]"
           />
           <span className="text-sm font-medium w-10">{minScore}%</span>
         </div>
